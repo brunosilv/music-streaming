@@ -1,0 +1,4 @@
+25;André Pinto;arpinto;arpinto@ufp.edu.pt
+24;Beatriz Gomes;argomes;argomes@ufp.edu.pt
+44;José Torres;jtorres;jtorres@ufp.edu.pt
+31;Christophe Soares;csoares;csoares@ufp.edu.pt
