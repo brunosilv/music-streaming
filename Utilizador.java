@@ -14,14 +14,14 @@ import edu.princeton.cs.algs4.StdOut;
  *
  * @author Diogo
  */
-public class Utilizadores {
+public class Utilizador {
   String name;
   String user;
   String mail;
 
  
   
-public Utilizadores(String nome,String username,String email)
+public Utilizador(String nome,String username,String email)
 {
     user = username;
     name = nome;
@@ -49,7 +49,7 @@ public Utilizadores(String nome,String username,String email)
             String username = texto[2];
             String email = texto[3];
 
-            Utilizadores utilizador = new Utilizadores(nome, username, email);
+            Utilizador utilizador = new Utilizador(nome, username, email);
             LinearProbingHashST1.put(username,utilizador);
         }
         return LinearProbingHashST1;
@@ -66,7 +66,7 @@ public Utilizadores(String nome,String username,String email)
         String username=null;
         String nome=null;
         String email=null;
-        Utilizadores val = new Utilizadores(nome, username, email);
+        Utilizador val = new Utilizador(nome, username, email);
         StdOut.print("O que pretende editar,selecione um numero de 0 a 3");
         StdOut.print("1-Username");
         StdOut.print("2-Nome");
@@ -82,21 +82,21 @@ public Utilizadores(String nome,String username,String email)
         {
          case 1:
         username=StdIn.readString();
-        val=(Utilizadores) LinearProbingHashST1.get(key);
+        val=(Utilizador) LinearProbingHashST1.get(key);
         val.user = username;
         LinearProbingHashST1.put(key, null);
         LinearProbingHashST1.put(key, val);
         break;
          case 2:
         nome=StdIn.readString();
-        val=(Utilizadores) LinearProbingHashST1.get(key);
+        val=(Utilizador) LinearProbingHashST1.get(key);
         val.name = nome;
         LinearProbingHashST1.put(key, null);
         LinearProbingHashST1.put(key, val);
          break;
          case 3:
         email=StdIn.readString();
-        val=(Utilizadores) LinearProbingHashST1.get(key);
+        val=(Utilizador) LinearProbingHashST1.get(key);
         val.mail = email;
         LinearProbingHashST1.put(key, null);
         LinearProbingHashST1.put(key, val);
@@ -117,7 +117,7 @@ public Utilizadores(String nome,String username,String email)
         
         
         
-        Utilizadores ut = new Utilizadores(username, nome, email);
+        Utilizador ut = new Utilizador(username, nome, email);
         LinearProbingHashST1 st1;
         LinearProbingHashST1 st2 = new LinearProbingHashST1() ;
         

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ufp.inf.aed2.project1;
+package edu.ufp.inf.aed2.project1;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.LinearProbingHashST;
@@ -14,12 +14,12 @@ import edu.princeton.cs.algs4.StdOut;
  *
  * @author bluis
  */
-public class Artistas {
+public class Artista {
     String username;
     String nome;
     String generomusical;
 
-    public Artistas(String username, String nome, String generomusical) {
+    public Artista(String username, String nome, String generomusical) {
         this.username = username;
         this.nome = nome;
         this.generomusical = generomusical;

@@ -13,7 +13,7 @@ public class Genero {
     
     private String genero; // chave unica
     private String descricao; // chave unica
-    private RedBlackBST_Projecto<String, Músicas> generoMusicsST = new RedBlackBST_Projecto<>(); // musicas deste genero
+    private RedBlackBST_Projecto<String, Musica> generoMusicsST = new RedBlackBST_Projecto<>(); // musicas deste genero
 
 
     public Genero(String genero, String descricao) {
