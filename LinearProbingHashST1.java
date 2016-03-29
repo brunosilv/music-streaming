@@ -13,7 +13,7 @@
  *
  ******************************************************************************/
 
-package ProjectoAED;
+package ufp.inf.aed2.project1;
 
 import edu.princeton.cs.algs4.*;
 

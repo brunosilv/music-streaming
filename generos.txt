@@ -1,7 +1,0 @@
-Rock;Rock
-Pop;Pop
-Fado;Fado
-Reggae;Reggae
-Blues;Blues
-Hiphop;Hiphop
-MPB; Musica popular portuguesa

@@ -27,9 +27,9 @@
  *
  ******************************************************************************/
 
-package ufp.inf.aed2.project1;
+package edu.ufp.inf.aed2.project1;
 
-import princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.*;
 import java.util.NoSuchElementException;
 
 /**
@@ -274,7 +274,19 @@ public class RedBlackBST_Projecto<Key extends Comparable<Key>, Value> {
 
         return balance(h);
     }
+    public Iterable<Key> inOrder() {
+        Queue<Key> keys = new Queue<>();
+        return inOrder(root, keys);
+    }
 
+    private Iterable<Key> inOrder(Node node, Queue keys) {
+        if (node != null) {
+            inOrder(node.left, keys);
+            keys.enqueue(node.key);
+            inOrder(node.right, keys);
+        }
+        return keys;
+    }
     /**
      * Removes the specified key and its associated value from this symbol table     
      * (if the key is in this symbol table).    

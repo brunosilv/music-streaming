@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ufp.inf.aed2.project1;
+package edu.ufp.inf.aed2.project1;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.RedBlackBST;
@@ -12,7 +12,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 /**
  *
- * @author Diogo
+ * @author bluis
  */
 public class Músicas {
         String ISR;
@@ -42,7 +42,7 @@ public class Músicas {
     return result.toString();
   }  
   
-        public static RedBlackBST1 inserirMusicas(RedBlackBST1 RedBlackBST1)
+        public static RedBlackBST_Projecto inserirMusicas(RedBlackBST_Projecto RedBlackBST1)
         {
              In in = new In(".//data//musicas.txt");
               while (!in.isEmpty()) 
@@ -61,7 +61,7 @@ public class Músicas {
         }
             return RedBlackBST1;
         }
-        public static RedBlackBST1 removerMusicas(RedBlackBST1 RedBlackBST1, Integer key)
+        public static RedBlackBST_Projecto removerMusicas(RedBlackBST_Projecto RedBlackBST1, Integer key)
         {
             RedBlackBST1.delete(key);
             return RedBlackBST1;
@@ -76,8 +76,8 @@ public class Músicas {
         String gender = null;
         
         Músicas musicas = new Músicas(ISRC, name, durofmus, artist, gender);
-        RedBlackBST1 mt1;
-        RedBlackBST1 mt2 = new RedBlackBST1();
+        RedBlackBST_Projecto mt1;
+        RedBlackBST_Projecto mt2 = new RedBlackBST_Projecto();
         
         mt1 = musicas.inserirMusicas(mt2);
          for (Object s: mt1.keys()) 

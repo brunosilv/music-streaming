@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ufp.inf.aed2.project1;
+package edu.ufp.inf.aed2.project1;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
@@ -13,7 +13,7 @@ import edu.princeton.cs.algs4.StdOut;
  *
  * @author a8pin
  */
-public class project1 {
+public class projeto_aed2_2016 {
 
     /**
      * @param args the command line arguments
@@ -29,12 +29,13 @@ public class project1 {
         /*
          * Inicialização das St's
          */
-        loadFromFileGenerosST(generosST, ".//data//aed2_1516//generos.txt");
+        loadFromFileGenerosST(generosST, ".//data//generos.txt");
                
                      
         /* 
          *  Chamada dos Clientes 
          */
+        printMusicByGenres(generosST);
      
     }
 

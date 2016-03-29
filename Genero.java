@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ufp.inf.aed2.project1;
+package edu.ufp.inf.aed2.project1;
 
 /**
  *
