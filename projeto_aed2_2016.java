@@ -28,13 +28,13 @@ public class projeto_aed2_2016 {
         RedBlackBST_Projecto<String, Genero> generosST = new RedBlackBST_Projecto<>();
         RedBlackBST_Projecto<String, Musica> musicasST = new RedBlackBST_Projecto<>();
         SeparateChainingHashST1<String, Artista> artistasST = new SeparateChainingHashST1<>();
-
+        SeparateChainingHashST1<String, Utilizador> utilizadoresST = new SeparateChainingHashST1<>();
         /*
          * Inicialização das St's
          */
         loadFromFileGenerosST(generosST, ".//data//generos.txt");
         loadFromFileArtistasST(artistasST, ".//data//artista.txt");
-        //loadFromFileUtilizadoresST(utilizadoresST, ".//data//pessoas.txt");
+        loadFromFileUtilizadoresST(utilizadoresST, ".//data//pessoas.txt");
         loadFromFileMusicasST(musicasST,generosST, ".//data//musicas.txt");
         /* 
          *  Chamada dos Clientes 
@@ -85,7 +85,19 @@ public class projeto_aed2_2016 {
             artistasST.put(username, a);
         }
     }
+    
+    public static void loadFromFileUtilizadoresST(SeparateChainingHashST1<String, Utilizador> utilizadoresST, String path) {
+        In in = new In(path); // abertura do ficheiro/stream de entrada
+        while (!in.isEmpty()) {
+            String[] texto = in.readLine().split(";");
+            String nome = texto[0];
+            String username = texto[1];
+            String email = texto[2];
 
+            Utilizador u = new Utilizador(nome, username, email);
+            utilizadoresST.put(username, u);
+        }
+    }
     public static void printMusicByGenres(RedBlackBST_Projecto<String, Genero> genreSt) {
         StdOut.print("\n\nLista de Generos:\n");
         for (String g : genreSt.inOrder()) {

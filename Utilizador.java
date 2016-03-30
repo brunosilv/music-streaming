@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ufp.inf.aed2.project1;
+package edu.ufp.inf.aed2.project1;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.LinearProbingHashST;
@@ -12,123 +12,42 @@ import edu.princeton.cs.algs4.StdOut;
 
 /**
  *
- * @author Diogo
+ * @author Bruno Silva
  */
 public class Utilizador {
-  String name;
-  String user;
-  String mail;
 
- 
-  
-public Utilizador(String nome,String username,String email)
-{
-    user = username;
-    name = nome;
-    mail = email;
-    
+    String nome;
+    String username;
+    String mail;
+
+    public Utilizador(String nome, String username, String mail) {
+        this.nome = nome;
+        this.username = username;
+        this.mail = mail;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
 }
- @Override
-  public String toString() {
-    StringBuilder result = new StringBuilder();
-    String NEW_LINE = System.getProperty("line.separator");
-    result.append(" Nome: " + name + NEW_LINE);
-    result.append(" Email: " + mail + NEW_LINE );
-    return result.toString();
-    
-  }
-  
-    
-    public static LinearProbingHashST1 inserirUtilizador(LinearProbingHashST1 LinearProbingHashST1)
-    {
-        In in = new In(".//data//pessoas.txt");
-         while (!in.isEmpty()) 
-        {
-            String[] texto = in.readLine().split(";");
-            String nome = texto[1];
-            String username = texto[2];
-            String email = texto[3];
-
-            Utilizador utilizador = new Utilizador(nome, username, email);
-            LinearProbingHashST1.put(username,utilizador);
-        }
-        return LinearProbingHashST1;
-    }
-    public static LinearProbingHashST1 removerUtilizador(LinearProbingHashST1 LinearProbingHashST1, String key)
-    {
-        LinearProbingHashST1.delete(key);
-        return LinearProbingHashST1;
-       
-    }
-    public static LinearProbingHashST1 editarUtilizador(LinearProbingHashST1 LinearProbingHashST1, String key)
-    {
-        In in = new In();
-        String username=null;
-        String nome=null;
-        String email=null;
-        Utilizador val = new Utilizador(nome, username, email);
-        StdOut.print("O que pretende editar,selecione um numero de 0 a 3");
-        StdOut.print("1-Username");
-        StdOut.print("2-Nome");
-        StdOut.print("3-Email");
-        StdOut.print("0-Sair");
-        // handle user commands
-        boolean quit = false;
-        int menuItem;
-        //do {
-        System.out.print("Escolha uma das opções: ");
-        menuItem = in.readInt();
-        switch(menuItem)
-        {
-         case 1:
-        username=StdIn.readString();
-        val=(Utilizador) LinearProbingHashST1.get(key);
-        val.user = username;
-        LinearProbingHashST1.put(key, null);
-        LinearProbingHashST1.put(key, val);
-        break;
-         case 2:
-        nome=StdIn.readString();
-        val=(Utilizador) LinearProbingHashST1.get(key);
-        val.name = nome;
-        LinearProbingHashST1.put(key, null);
-        LinearProbingHashST1.put(key, val);
-         break;
-         case 3:
-        email=StdIn.readString();
-        val=(Utilizador) LinearProbingHashST1.get(key);
-        val.mail = email;
-        LinearProbingHashST1.put(key, null);
-        LinearProbingHashST1.put(key, val);
-         break;
-         case 0:
-         quit = true;    
-         break;
-         default:
-             System.out.println("Opção inválida");
-            }
-        //}while(!quit);
-      return  LinearProbingHashST1;
-    }
-    public static void main(String[] args) {
-        String username = null;
-        String nome = null;
-        String email = null;
-        
-        
-        
-        Utilizador ut = new Utilizador(username, nome, email);
-        LinearProbingHashST1 st1;
-        LinearProbingHashST1 st2 = new LinearProbingHashST1() ;
-        
-       st1 = ut.inserirUtilizador(st2);
-       //StdOut.print("Introduza o utilizador que pretende editar: ");
-       //String users = StdIn.readString();
-       //ut.removerUtilizador(st1,users);
-       //ut.editarUtilizador(st1,users);
-       
-       for (Object s: st1.keys()) 
-            StdOut.println(s + " " + st1.get(s)); 
-    }    
-}
-
