@@ -12,7 +12,7 @@ import javax.xml.bind.ParseConversionEvent;
 
 /**
  *
- * @author a8pin
+ * @author Bruno Silva
  */
 public class projeto_aed2_2016 {
 
@@ -27,6 +27,8 @@ public class projeto_aed2_2016 {
         // red-black trees
         RedBlackBST_Projecto<String, Genero> generosST = new RedBlackBST_Projecto<>();
         RedBlackBST_Projecto<String, Musica> musicasST = new RedBlackBST_Projecto<>();
+        
+        //hashing trees
         SeparateChainingHashST1<String, Artista> artistasST = new SeparateChainingHashST1<>();
         SeparateChainingHashST1<String, Utilizador> utilizadoresST = new SeparateChainingHashST1<>();
         /*
@@ -55,7 +57,7 @@ public class projeto_aed2_2016 {
         }
     }
 
-    public static void loadFromFileMusicasST(RedBlackBST_Projecto<String, Musica> musicasST,RedBlackBST_Projecto<String, Genero> generosSt, String path) {
+    public static void loadFromFileMusicasST(RedBlackBST_Projecto<String, Musica> musicaST,RedBlackBST_Projecto<String, Genero> generoST, String path) {
         In in = new In(path); // abertura do ficheiro/stream de entrada
         while (!in.isEmpty()) {
             String[] texto = in.readLine().split(";");
@@ -66,9 +68,9 @@ public class projeto_aed2_2016 {
             String genero = texto[4];
 
             Musica m = new Musica (ISRC, nome, duracao, artista, genero);
-            musicasST.put(ISRC, m);
+            musicaST.put(ISRC, m);
             
-            Genero g = generosSt.get(genero);
+            Genero g = generoST.get(genero);
             g.getGeneroMusicsST().put(ISRC, m);
         }
     }
@@ -98,12 +100,12 @@ public class projeto_aed2_2016 {
             utilizadoresST.put(username, u);
         }
     }
-    public static void printMusicByGenres(RedBlackBST_Projecto<String, Genero> genreSt) {
+    public static void printMusicByGenres(RedBlackBST_Projecto<String, Genero> generoST) {
         StdOut.print("\n\nLista de Generos:\n");
-        for (String g : genreSt.inOrder()) {
+        for (String g : generoST.inOrder()) {
             StdOut.println("Género: " + g);
             
-            RedBlackBST_Projecto<String, Musica> musicas = genreSt.get(g).getGeneroMusicsST();
+            RedBlackBST_Projecto<String, Musica> musicas = generoST.get(g).getGeneroMusicsST();
             
             for (String isrc: musicas.keys()) {
                 Musica m = (Musica) musicas.get(isrc);
