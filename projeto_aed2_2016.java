@@ -43,6 +43,8 @@ public class projeto_aed2_2016 {
          */
         printMusicByGenres(generosST);
         printMusicByArtist(artistasST);
+        //printMusicByPlaylist(playlistsST);
+        //printMusicByHistory
 
     }
 
@@ -74,8 +76,8 @@ public class projeto_aed2_2016 {
             Genero g = generoST.get(genero);
             g.getGeneroMusicsST().put(ISRC, m);
             
-            Artista a = artistaST.get(nome);
-            g.getGeneroMusicsST().put(ISRC, m);
+            Artista a = artistaST.get(artista);
+            a.getArtistMusicSt().put(ISRC, m);
         }
     }
 
@@ -83,8 +85,8 @@ public class projeto_aed2_2016 {
         In in = new In(path); // abertura do ficheiro/stream de entrada
         while (!in.isEmpty()) {
             String[] texto = in.readLine().split(";");
-            String username = texto[0];
-            String nome = texto[1];
+            String username = texto[1];
+            String nome = texto[0];
             String generomusical = texto[2];
 
             Artista a = new Artista(username, nome, generomusical);
