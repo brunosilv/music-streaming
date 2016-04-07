@@ -44,12 +44,24 @@ public class projeto_aed2_2016 {
          */
         //printMusicByGenres(generosST);
         //printMusicByArtist(artistasST);
-        printMusicByPlaylist(playlistsST);
+        //printMusicByPlaylist(playlistsST);
         //printMusicByHistory(historyST);
         //createGenreSt(generosST);
-        //createArtistsSt(artistasST);
+        //readGenreSt(generosST);
+        //updateGenreSt(generosST);
+        //deleteGenreSt(generosST);
+        //createArtistSt(artistasST);
+        //readArtistSt(artistasST);
+        //updateArtistSt(artistasST);
+        //deleteArtistSt(artistasST);
         //createMusicSt(musicasST);
+        //readMusicSt(musicasST);
+        //updateMusicSt(musicasST);
+        //deleteMusicSt(musicasST);
         //createUsersSt(utilizadoresST);
+        //readUsersSt(utilizadoresST);
+        //updateUsersSt(utilizadoresST);
+        //deleteUsersSt(utilizadoresST);
     }
 
     public static void loadFromFilePlaylistST(RedBlackBST_Projecto<String, Playlist> playlistST, SeparateChainingHashST1<String, Utilizador> utilizadoresST, RedBlackBST_Projecto<String, Musica> musicasST, String path) {
@@ -134,7 +146,7 @@ public class projeto_aed2_2016 {
     }
 
     /*
-    Create, Update, Delete (Genero)
+    Create, Read, Update, Delete (Genero)
      */
     public static RedBlackBST_Projecto createGenreSt(RedBlackBST_Projecto generoST) {
 
@@ -198,7 +210,7 @@ public class projeto_aed2_2016 {
     }
 
     /*
-    Create, Update, Delete (Musica)
+    Create, Read, Update, Delete (Musica)
      */
     public static RedBlackBST_Projecto createMusicSt(RedBlackBST_Projecto musicaST) {
 
@@ -286,7 +298,7 @@ public class projeto_aed2_2016 {
     }
 
     /*
-    Create, Update, Delete (Utilizador)
+    Create, Read, Update, Delete (Utilizador)
      */
     public static SeparateChainingHashST1 createUsersSt(SeparateChainingHashST1 utilizadorST) {
 
@@ -356,7 +368,7 @@ public class projeto_aed2_2016 {
     }
 
     /*
-    Create, Update, Delete (Artista)
+    Create, Read, Update, Delete (Artista)
      */
     public static SeparateChainingHashST1 createArtistsSt(SeparateChainingHashST1 artistaST) {
 
