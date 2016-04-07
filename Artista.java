@@ -19,7 +19,7 @@ public class Artista {
     String username;
     String nome;
     String generomusical;
-    private RedBlackBST_Projecto<String, Musica> artistMusicSt = new RedBlackBST_Projecto<>();
+    private RedBlackBST_Projecto<String, Musica> artistMusicSt = new RedBlackBST_Projecto<>();//Musica deste artista
 
     public Artista(String username, String nome, String generomusical) {
         this.username = username;
