@@ -5,6 +5,8 @@
  */
 package edu.ufp.inf.aed2.project1;
 
+import edu.ufp.inf.aed2.project1.Musica;
+
 /**
  *
  * @author bluis
@@ -22,7 +24,9 @@ public class Playlist {
 
 //Gets e Sets
 
-    
+     public void musica (Musica e) {
+        this.playlistSt.put(e.getISRC(),e);
+    }
     
     public String getNome() {
         return nome;

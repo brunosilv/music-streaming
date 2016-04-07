@@ -30,7 +30,7 @@ public class Musica {
         this.genero = genero;
     }
 
-    public String getISR() {
+    public String getISRC() {
         return ISRC;
     }
 

@@ -38,34 +38,38 @@ public class projeto_aed2_2016 {
         loadFromFileArtistasST(artistasST, ".//data//artista.txt");
         loadFromFileUtilizadoresST(utilizadoresST, ".//data//pessoas.txt");
         loadFromFileMusicasST(musicasST, generosST, artistasST, playlistsST, utilizadoresST, ".//data//musicas.txt");
-        loadFromFilePlaylistST(playlistsST,utilizadoresST,musicasST, ".//data//playlists.txt");
+        loadFromFilePlaylistST(playlistsST, utilizadoresST, musicasST, ".//data//playlists.txt");
         /* 
          *  Chamada dos Clientes 
          */
         //printMusicByGenres(generosST);
         //printMusicByArtist(artistasST);
-        //printMusicByPlaylist(playlistsST);
+        printMusicByPlaylist(playlistsST);
         //printMusicByHistory(historyST);
-
+        //createGenreSt(generosST);
+        //createArtistsSt(artistasST);
+        //createMusicSt(musicasST);
+        //createUsersSt(utilizadoresST);
     }
 
-    public static void loadFromFilePlaylistST(RedBlackBST_Projecto<String, Playlist> playlistST,SeparateChainingHashST1<String, Utilizador> utilizadoresST, RedBlackBST_Projecto<String, Musica> musicasST, String path) {
+    public static void loadFromFilePlaylistST(RedBlackBST_Projecto<String, Playlist> playlistST, SeparateChainingHashST1<String, Utilizador> utilizadoresST, RedBlackBST_Projecto<String, Musica> musicasST, String path) {
         In in = new In(path); // abertura do ficheiro/stream de entrada
         while (!in.isEmpty()) {
             String[] texto = in.readLine().split(";");
             String nome = texto[0];
             String username = texto[1];
-            String musica = texto[2];
 
             Playlist p = new Playlist(nome);
             playlistST.put(nome, p);
-            
+
             Utilizador u = utilizadoresST.get(username);
             u.getUserplSt().put(nome, p);
-            
-            Musica m = musicasST.get(musica);
-            
-            
+            for (int i = 1; i < texto.length; i++) {
+                if (musicasST.contains(texto[i])) {
+                    playlistST.get(nome).musica(musicasST.get(texto[i]));
+                }
+            }
+
         }
     }
 
@@ -81,7 +85,7 @@ public class projeto_aed2_2016 {
         }
     }
 
-    public static void loadFromFileMusicasST(RedBlackBST_Projecto<String, Musica> musicaST, RedBlackBST_Projecto<String, Genero> generoST, SeparateChainingHashST1<String, Artista> artistaST, RedBlackBST_Projecto<String, Playlist> playlistST,SeparateChainingHashST1<String, Utilizador> utilizadoresST, String path) {
+    public static void loadFromFileMusicasST(RedBlackBST_Projecto<String, Musica> musicaST, RedBlackBST_Projecto<String, Genero> generoST, SeparateChainingHashST1<String, Artista> artistaST, RedBlackBST_Projecto<String, Playlist> playlistST, SeparateChainingHashST1<String, Utilizador> utilizadoresST, String path) {
         In in = new In(path); // abertura do ficheiro/stream de entrada
         while (!in.isEmpty()) {
             String[] texto = in.readLine().split(";");
@@ -99,8 +103,7 @@ public class projeto_aed2_2016 {
 
             Artista a = artistaST.get(artista);
             a.getArtistMusicSt().put(ISRC, m);
-            
-           
+
         }
     }
 
@@ -135,7 +138,7 @@ public class projeto_aed2_2016 {
      */
     public static RedBlackBST_Projecto createGenreSt(RedBlackBST_Projecto generoST) {
 
-        In in = new In(".//data//genero.txt"); // abertura do ficheiro/stream de entrada
+        In in = new In(".//data//generos.txt"); // abertura do ficheiro/stream de entrada
 
         while (!in.isEmpty()) {
             String[] texto = in.readLine().split(";");
@@ -452,7 +455,6 @@ public class projeto_aed2_2016 {
         StdOut.print("\n\nLista de Musicas por Playlist:\n\n");
         for (String p : playlistST.inOrder()) {
             StdOut.println("Playlist: " + p);
-
             RedBlackBST_Projecto<String, Musica> musicas = playlistST.get(p).getPlaylistSt();
 
             for (String isrc : musicas.keys()) {
