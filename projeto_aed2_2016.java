@@ -44,21 +44,21 @@ public class projeto_aed2_2016 {
         /* 
          *  Chamada dos Clientes 
          */
-        printMusicByGenres(generosST); //a funcionar
-        printMusicByArtist(artistasST); //a funcionar
-        printMusicByPlaylist(playlistsST); //a funcionar
-        printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST); //a funcionar
+        //printMusicByGenres(generosST); //a funcionar
+        //printMusicByArtist(artistasST); //a funcionar
+        //printMusicByPlaylist(playlistsST); //a funcionar
+        //printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST); //a funcionar
         //printMusicByHistory(historyST);
-        createGenreSt(generosST); //a funcionar
+        //createGenreSt(generosST); //a funcionar
         //updateGenreSt(generosST;
         //deleteGenreSt(generosST);
-        saveGenreSt(generosST, ".//data//generos.txt"); // a funcionar
+        //saveGenreSt(generosST, ".//data//generos.txt"); // a funcionar
         //createArtistSt(artistasST);
         //updateArtistSt(artistasST);
         //deleteArtistSt(artistasST);
         //saveArtistSt(artistasST, ".//data//artista.txt");
         createMusicSt(musicasST, generosST, artistasST); //a funcionar
-        updateMusicSt(musicasST, artistasST, generosST); //a funcionar
+        //updateMusicSt(musicasST, artistasST, generosST); //a funcionar
         deleteMusicSt(musicasST, artistasST, generosST); //a funcionar
         saveMusicSt(musicasST, ".//data//musicas.txt"); //a funcionar
         //createUsersSt(utilizadoresST);
@@ -69,6 +69,15 @@ public class projeto_aed2_2016 {
     /*
     *   Loads
     */
+
+    /**
+     *
+     * @param playlistST
+     * @param utilizadoresST
+     * @param musicasST
+     * @param path
+     */
+
     public static void loadFromFilePlaylistST(RedBlackBST_Projecto<String, Playlist> playlistST, SeparateChainingHashST1<String, Utilizador> utilizadoresST, RedBlackBST_Projecto<String, Musica> musicasST, String path) {
         In in = new In(path); // abertura do ficheiro/stream de entrada
         while (!in.isEmpty()) {
@@ -90,6 +99,11 @@ public class projeto_aed2_2016 {
         }
     }
 
+    /**
+     *
+     * @param generoST
+     * @param path
+     */
     public static void loadFromFileGenerosST(RedBlackBST_Projecto<String, Genero> generoST, String path) {
         In in = new In(path); // abertura do ficheiro/stream de entrada
         while (!in.isEmpty()) {
@@ -102,6 +116,15 @@ public class projeto_aed2_2016 {
         }
     }
 
+    /**
+     *
+     * @param musicaST
+     * @param generoST
+     * @param artistaST
+     * @param playlistST
+     * @param utilizadoresST
+     * @param path
+     */
     public static void loadFromFileMusicasST(RedBlackBST_Projecto<String, Musica> musicaST, RedBlackBST_Projecto<String, Genero> generoST, SeparateChainingHashST1<String, Artista> artistaST, RedBlackBST_Projecto<String, Playlist> playlistST, SeparateChainingHashST1<String, Utilizador> utilizadoresST, String path) {
         In in = new In(path); // abertura do ficheiro/stream de entrada
         while (!in.isEmpty()) {
@@ -124,6 +147,11 @@ public class projeto_aed2_2016 {
         }
     }
 
+    /**
+     *
+     * @param artistasST
+     * @param path
+     */
     public static void loadFromFileArtistasST(SeparateChainingHashST1<String, Artista> artistasST, String path) {
         In in = new In(path); // abertura do ficheiro/stream de entrada
         while (!in.isEmpty()) {
@@ -137,6 +165,11 @@ public class projeto_aed2_2016 {
         }
     }
 
+    /**
+     *
+     * @param utilizadoresST
+     * @param path
+     */
     public static void loadFromFileUtilizadoresST(SeparateChainingHashST1<String, Utilizador> utilizadoresST, String path) {
         In in = new In(path); // abertura do ficheiro/stream de entrada
         while (!in.isEmpty()) {
@@ -153,6 +186,14 @@ public class projeto_aed2_2016 {
     /*
      *  Validações
      */
+
+    /**
+     *
+     * @param musicaST
+     * @param isrc
+     * @return
+     */
+
     public static boolean isrcValidation(RedBlackBST_Projecto<String, Musica> musicaST, String isrc) {
         for (String key : musicaST.keys()) {
             Musica m = musicaST.get(key);
@@ -163,6 +204,12 @@ public class projeto_aed2_2016 {
         return false;
     }
 
+    /**
+     *
+     * @param generosST
+     * @param genero
+     * @return
+     */
     public static boolean genreValidation(RedBlackBST_Projecto<String, Genero> generosST, String genero) {
         for (String key : generosST.keys()) {
             Genero g = (Genero) generosST.get(key);
@@ -173,6 +220,12 @@ public class projeto_aed2_2016 {
         return false;
     }
 
+    /**
+     *
+     * @param artistaST
+     * @param artista
+     * @return
+     */
     public static boolean artistValidation(SeparateChainingHashST1<String, Artista> artistaST, String artista) {
         for (String username : artistaST.keys()) {
             Artista a = (Artista) artistaST.get(username);
@@ -186,6 +239,12 @@ public class projeto_aed2_2016 {
     /*
      *  Genero
      */
+
+    /**
+     *
+     * @param generoST
+     */
+
     public static void createGenreSt(RedBlackBST_Projecto<String, Genero> generoST) {
 
         String genero, desc;
@@ -207,6 +266,11 @@ public class projeto_aed2_2016 {
 
     }
 
+    /**
+     *
+     * @param generoST
+     * @param path
+     */
     public static void saveGenreSt(RedBlackBST_Projecto<String, Genero> generoST, String path) {
         Out o = new Out(path);
         for (String genero : generoST.keys()) {
@@ -216,6 +280,12 @@ public class projeto_aed2_2016 {
 
     }
 
+    /**
+     *
+     * @param generoST
+     * @param key
+     * @return
+     */
     public static RedBlackBST_Projecto deleteGenreSt(RedBlackBST_Projecto generoST, Integer key) {
         generoST.delete(key);
         return generoST;
@@ -224,6 +294,14 @@ public class projeto_aed2_2016 {
     /*
      *  Musica
      */
+
+    /**
+     *
+     * @param musicaST
+     * @param generoST
+     * @param artistaST
+     */
+
     public static void createMusicSt(RedBlackBST_Projecto<String, Musica> musicaST, RedBlackBST_Projecto<String, Genero> generoST,
             SeparateChainingHashST1<String, Artista> artistaST) {
         String isrc, nome, artista, genero;
@@ -263,6 +341,10 @@ public class projeto_aed2_2016 {
 
     }
 
+    /**
+     *
+     * @param musicaST
+     */
     public static void printMusicST(RedBlackBST_Projecto<String, Musica> musicaST) {
         int i = 1;
         for (String isrc : musicaST.keys()) {
@@ -275,6 +357,12 @@ public class projeto_aed2_2016 {
         }
     }
 
+    /**
+     *
+     * @param musicaST
+     * @param artistaST
+     * @param generoST
+     */
     public static void updateMusicSt(RedBlackBST_Projecto<String, Musica> musicaST, SeparateChainingHashST1<String, Artista> artistaST,
             RedBlackBST_Projecto<String, Genero> generoST) {
         Scanner sca = new Scanner(System.in);
@@ -357,6 +445,12 @@ public class projeto_aed2_2016 {
 
     }
 
+    /**
+     *
+     * @param musicaST
+     * @param artistaST
+     * @param generoST
+     */
     public static void deleteMusicSt(RedBlackBST_Projecto<String, Musica> musicaST,
             SeparateChainingHashST1<String, Artista> artistaST, RedBlackBST_Projecto<String, Genero> generoST) {
         Scanner sca = new Scanner(System.in);
@@ -380,6 +474,11 @@ public class projeto_aed2_2016 {
 
     }
 
+    /**
+     *
+     * @param musicaST
+     * @param path
+     */
     public static void saveMusicSt(RedBlackBST_Projecto<String, Musica> musicaST, String path) {
         Out o = new Out(path);
         for (String isrc : musicaST.keys()) {
@@ -392,6 +491,13 @@ public class projeto_aed2_2016 {
     /*
     Create, Read, Update, Delete (Utilizador)
      */
+
+    /**
+     *
+     * @param utilizadorST
+     * @return
+     */
+
     public static SeparateChainingHashST1 createUsersSt(SeparateChainingHashST1 utilizadorST) {
 
         In in = new In(".//data//pessoas.txt"); // abertura do ficheiro/stream de entrada
@@ -409,6 +515,12 @@ public class projeto_aed2_2016 {
         return utilizadorST;
     }
 
+    /**
+     *
+     * @param utilizadorST
+     * @param key
+     * @return
+     */
     public static SeparateChainingHashST1 updateUserSt(SeparateChainingHashST1<String, Utilizador> utilizadorST, String key) {
         In in = new In();
         String nome = null, username = null, email = null;
@@ -454,6 +566,12 @@ public class projeto_aed2_2016 {
         return utilizadorST;
     }
 
+    /**
+     *
+     * @param utilizadorST
+     * @param key
+     * @return
+     */
     public static SeparateChainingHashST1 deleteUserSt(SeparateChainingHashST1 utilizadorST, Integer key) {
         utilizadorST.delete(key);
         return utilizadorST;
@@ -462,6 +580,13 @@ public class projeto_aed2_2016 {
     /*
     Create, Read, Update, Delete (Artista)
      */
+
+    /**
+     *
+     * @param artistaST
+     * @return
+     */
+
     public static SeparateChainingHashST1 createArtistsSt(SeparateChainingHashST1 artistaST) {
 
         In in = new In(".//data//artista.txt"); // abertura do ficheiro/stream de entrada
@@ -480,6 +605,12 @@ public class projeto_aed2_2016 {
 
     }
 
+    /**
+     *
+     * @param artistaST
+     * @param key
+     * @return
+     */
     public static SeparateChainingHashST1 updateArtistSt(SeparateChainingHashST1<String, Artista> artistaST, String key) {
         In in = new In();
         String username = null, nome = null, generomusical = null;
@@ -519,6 +650,12 @@ public class projeto_aed2_2016 {
         return artistaST;
     }
 
+    /**
+     *
+     * @param generoST
+     * @param key
+     * @return
+     */
     public static SeparateChainingHashST1 deleteArtistSt(SeparateChainingHashST1 generoST, Integer key) {
         generoST.delete(key);
         return generoST;
@@ -527,6 +664,12 @@ public class projeto_aed2_2016 {
     /*
     Testes e Listagens
      */
+
+    /**
+     *
+     * @param generoST
+     */
+
     public static void printMusicByGenres(RedBlackBST_Projecto<String, Genero> generoST) {
         StdOut.print("\n\nLista de Musica por Generos:\n\n");
         for (String g : generoST.inOrder()) {
@@ -541,6 +684,10 @@ public class projeto_aed2_2016 {
         }
     }
 
+    /**
+     *
+     * @param artistaST
+     */
     public static void printMusicByArtist(SeparateChainingHashST1<String, Artista> artistaST) {
         StdOut.print("\n\nLista de Musica por Artistas:\n\n");
         for (String a : artistaST.keys()) {
@@ -555,6 +702,10 @@ public class projeto_aed2_2016 {
         }
     }
 
+    /**
+     *
+     * @param playlistST
+     */
     public static void printMusicByPlaylist(RedBlackBST_Projecto<String, Playlist> playlistST) {
         StdOut.print("\n\nLista de Musicas por Playlist:\n\n");
         for (String p : playlistST.inOrder()) {
@@ -568,6 +719,14 @@ public class projeto_aed2_2016 {
         }
     }
 
+    /**
+     *
+     * @param musicaST
+     * @param generoST
+     * @param artistasST
+     * @param playlistST
+     * @param utilizadorST
+     */
     public static void printAll(RedBlackBST_Projecto<String, Musica> musicaST, RedBlackBST_Projecto<String, Genero> generoST,
             SeparateChainingHashST1<String, Artista> artistasST, RedBlackBST_Projecto<String, Playlist> playlistST,
             SeparateChainingHashST1<String, Utilizador> utilizadorST) {
@@ -603,6 +762,12 @@ public class projeto_aed2_2016 {
 
     }
 
+    /**
+     *
+     * @param musicaST
+     * @param isrc
+     * @return
+     */
     public static boolean verificarISRC(RedBlackBST_Projecto<String, Musica> musicaST, String isrc) {
         for (String key : musicaST.keys()) {
             Musica m = musicaST.get(key);

@@ -64,6 +64,8 @@ import java.util.NoSuchElementException;
  *  {@link SequentialSearchST}, {@link BST},
  *  {@link SeparateChainingHashST}, and {@link LinearProbingHashST},
  *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * @param <Key>
+ * @param <Value>
  */
 
 public class RedBlackBST_Projecto<Key extends Comparable<Key>, Value> {
@@ -274,6 +276,11 @@ public class RedBlackBST_Projecto<Key extends Comparable<Key>, Value> {
 
         return balance(h);
     }
+
+    /**
+     *
+     * @return
+     */
     public Iterable<Key> inOrder() {
         Queue<Key> keys = new Queue<>();
         return inOrder(root, keys);
@@ -586,6 +593,8 @@ public class RedBlackBST_Projecto<Key extends Comparable<Key>, Value> {
     /**
      * Returns all keys in the symbol table in the given range,
      * as an <tt>Iterable</tt>.
+     * @param lo
+     * @param hi
      * @return all keys in the sybol table between <tt>lo</tt> 
      *    (inclusive) and <tt>hi</tt> (exclusive) as an <tt>Iterable</tt>
      * @throws NullPointerException if either <tt>lo</tt> or <tt>hi</tt>
@@ -614,6 +623,8 @@ public class RedBlackBST_Projecto<Key extends Comparable<Key>, Value> {
 
     /**
      * Returns the number of keys in the symbol table in the given range.
+     * @param lo
+     * @param hi
      * @return the number of keys in the sybol table between <tt>lo</tt> 
      *    (inclusive) and <tt>hi</tt> (exclusive)
      * @throws NullPointerException if either <tt>lo</tt> or <tt>hi</tt>
@@ -706,6 +717,7 @@ public class RedBlackBST_Projecto<Key extends Comparable<Key>, Value> {
 
     /**
      * Unit tests the <tt>RedBlackBST</tt> data type.
+     * @param args
      */
     public static void main(String[] args) { 
         RedBlackBST<String, Integer> st = new RedBlackBST<String, Integer>();

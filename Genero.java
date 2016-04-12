@@ -20,15 +20,28 @@ public class Genero {
     private String descricao; // chave unica
     private RedBlackBST_Projecto<String, Musica> generoMusicsSt = new RedBlackBST_Projecto<>(); // musicas deste genero
 
+    /**
+     *
+     * @param genero
+     * @param descricao
+     */
     public Genero(String genero, String descricao) {
         this.genero = genero;
         this.descricao = descricao;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDescricao() {
         return descricao;
     }
 
+    /**
+     *
+     * @param descricao
+     */
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }

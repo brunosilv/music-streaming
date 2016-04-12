@@ -38,6 +38,8 @@ import edu.princeton.cs.algs4.*;
  *  {@link SequentialSearchST}, {@link BST}, {@link RedBlackBST}, and
  *  {@link LinearProbingHashST},
  *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * @param <Key>
+ * @param <Value>
  */
 public class SeparateChainingHashST1<Key, Value> {
     private static final int INIT_CAPACITY = 4;
@@ -182,6 +184,11 @@ public class SeparateChainingHashST1<Key, Value> {
     } 
 
     // return keys in symbol table as an Iterable
+
+    /**
+     *
+     * @return
+     */
     public Iterable<Key> keys() {
         Queue<Key> queue = new Queue<Key>();
         for (int i = 0; i < M; i++) {
@@ -194,6 +201,7 @@ public class SeparateChainingHashST1<Key, Value> {
 
     /**
      * Unit tests the <tt>SeparateChainingHashST</tt> data type.
+     * @param args
      */
     public static void main(String[] args) { 
         SeparateChainingHashST1<String, Integer> st = new SeparateChainingHashST1<String, Integer>();

@@ -16,7 +16,10 @@ public class Playlist {
    
     private RedBlackBST_Projecto<String, Musica> playlistSt = new RedBlackBST_Projecto<>();//musicas nesta playlist
     
-
+    /**
+     *
+     * @param nome
+     */
     public Playlist(String nome) {
         this.nome = nome;
     }
@@ -24,22 +27,43 @@ public class Playlist {
 
 //Gets e Sets
 
+    /**
+     *
+     * @param e
+     */
+
      public void musica (Musica e) {
         this.playlistSt.put(e.getISRC(),e);
     }
     
+    /**
+     *
+     * @return
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     *
+     * @param nome
+     */
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    /**
+     *
+     * @return
+     */
     public RedBlackBST_Projecto<String, Musica> getPlaylistSt() {
         return playlistSt;
     }
 
+    /**
+     *
+     * @param playlistSt
+     */
     public void setPlaylistSt(RedBlackBST_Projecto<String, Musica> playlistSt) {
         this.playlistSt = playlistSt;
     }
