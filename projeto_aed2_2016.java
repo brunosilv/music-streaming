@@ -6,8 +6,10 @@
 package edu.ufp.inf.aed2.project1;
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Out;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import java.util.Scanner;
 
 /**
  *
@@ -32,7 +34,7 @@ public class projeto_aed2_2016 {
         SeparateChainingHashST1<String, Artista> artistasST = new SeparateChainingHashST1<>();
         SeparateChainingHashST1<String, Utilizador> utilizadoresST = new SeparateChainingHashST1<>();
         /*
-         * Inicialização das St's
+         *  Inicialização das St's
          */
         loadFromFileGenerosST(generosST, ".//data//generos.txt");
         loadFromFileArtistasST(artistasST, ".//data//artista.txt");
@@ -42,14 +44,12 @@ public class projeto_aed2_2016 {
         /* 
          *  Chamada dos Clientes 
          */
-        ///printMusicByGenres(generosST);
-        ///printMusicByArtist(artistasST);
-        ///printMusicByPlaylist(playlistsST);
-        ///printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST);
+        printMusicByGenres(generosST);
+        printMusicByArtist(artistasST);
+        printMusicByPlaylist(playlistsST);
+        printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST);
         //printMusicByHistory(historyST);
-        //createGenreSt(generosST);
-        //readGenreSt(generosST);
-        //updateGenreSt(generosST);
+        createGenreSt(generosST);
         //deleteGenreSt(generosST);
         //createArtistSt(artistasST);
         //readArtistSt(artistasST);
@@ -147,64 +147,69 @@ public class projeto_aed2_2016 {
     }
 
     /*
-    Create, Read, Update, Delete (Genero)
+     *  Validações
      */
-    
-    
-    public static RedBlackBST_Projecto createGenreSt(RedBlackBST_Projecto generoST) {
-
-        In in = new In(".//data//generos.txt"); // abertura do ficheiro/stream de entrada
-
-        while (!in.isEmpty()) {
-            String[] texto = in.readLine().split(";");
-            String genero = texto[0];
-            String descricao = texto[1];
-
-            Genero g = new Genero(genero, descricao);
-            generoST.put(genero, g);
+    public static boolean isrcValidation(RedBlackBST_Projecto<String, Musica> musicaST, String isrc) {
+        for (String key : musicaST.keys()) {
+            Musica m = musicaST.get(key);
+            if (m.getISRC().equals(isrc)) {
+                return true;
+            }
         }
+        return false;
+    }
 
-        return generoST;
+    public static boolean genreValidation(RedBlackBST_Projecto<String, Genero> generosST, String genero) {
+        for (String key : generosST.keys()) {
+            Genero g = (Genero) generosST.get(key);
+            if (g.getGenero().equals(genero)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean artistValidation(SeparateChainingHashST1<String, Artista> artistaST, String artista) {
+        for (String username : artistaST.keys()) {
+            Artista a = (Artista) artistaST.get(username);
+            if (a.getUsername().equals(artista)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     *  Genero
+     */
+    public static void createGenreSt(RedBlackBST_Projecto<String, Genero> generoST) {
+
+        String genero, desc;
+
+        Scanner sca = new Scanner(System.in);
+
+        System.out.print("Genre: ");
+        genero = sca.nextLine();
+        while (genreValidation(generoST, genero) == true) {
+            System.out.println("Genero já se encontra na base de dados");
+            System.out.print("\nGenero: ");
+            sca.nextLine();
+            genero = sca.nextLine();
+        }
+        System.out.print("\nDescrição: ");
+        desc = sca.nextLine();
+        Genero g = new Genero(genero, desc);
+        generoST.put(genero, g);
 
     }
 
-    public static RedBlackBST_Projecto updateGenreSt(RedBlackBST_Projecto<String, Genero> generoST, String key) {
-        In in = new In();
-        String genero = null, descricao = null;
-
-        Genero g = new Genero(genero, descricao);
-        g = (Genero) generoST.get(key);
-        StdOut.print("O que pretende editar?");
-        StdOut.print("1-Genero\n");
-        StdOut.print("2-Descricao\n");
-        StdOut.print("0-Sair\n");
-        // handle user commands
-        boolean quit = false;
-        int menuItem;
-        //do {
-        System.out.print("Escolha uma das opções: ");
-        menuItem = in.readInt();
-        switch (menuItem) {
-            case 1:
-                genero = StdIn.readString();
-                g.setGenero(genero);
-                generoST.put(key, null);
-                generoST.put(key, g);
-                break;
-            case 2:
-                descricao = StdIn.readString();
-                g.setDescricao(descricao);
-                generoST.put(key, null);
-                generoST.put(key, g);
-                break;
-            case 0:
-                quit = true;
-                break;
-            default:
-                System.out.println("Opção inválida");
+    public static void saveGenreSt(RedBlackBST_Projecto<String, Genero> generoST, String path) {
+        Out o = new Out(path);
+        for (String genero : generoST.keys()) {
+            Genero g = (Genero) generoST.get(genero);
+            o.println(g.getGenero() + ";" + g.getDescricao());
         }
-        //}while(!quit);
-        return generoST;
+
     }
 
     public static RedBlackBST_Projecto deleteGenreSt(RedBlackBST_Projecto generoST, Integer key) {
@@ -213,91 +218,171 @@ public class projeto_aed2_2016 {
     }
 
     /*
-    Create, Read, Update, Delete (Musica)
+     *  Musica
      */
-    public static RedBlackBST_Projecto createMusicSt(RedBlackBST_Projecto musicaST) {
-
-        In in = new In(".//data//musicas.txt"); // abertura do ficheiro/stream de entrada
-
-        while (!in.isEmpty()) {
-            String[] texto = in.readLine().split(";");
-            String ISRC = texto[0];
-            String nome = texto[1];
-            Float duracao = Float.parseFloat(texto[2]);
-            String artista = texto[3];
-            String genero = texto[4];
-
-            Musica g = new Musica(ISRC, nome, duracao, artista, genero);
-            musicaST.put(genero, g);
+    public static void createMusicSt(RedBlackBST_Projecto<String, Musica> musicaST, RedBlackBST_Projecto<String, Genero> generoST,
+            SeparateChainingHashST1<String, Artista> artistaST) {
+        String isrc, nome, artista, genero;
+        String duracao;
+        float daux;
+        Scanner sca = new Scanner(System.in);
+        System.out.print("ISRC: ");
+        isrc = sca.nextLine();
+        System.out.print("\nNome da musica: ");
+        nome = sca.nextLine();
+        System.out.print("\nDuração(mm.ss): ");
+        duracao = sca.nextLine();
+        daux = Float.parseFloat(duracao);
+        System.out.print("\nArtista: ");
+        artista = sca.nextLine();
+        //Verifica se o artista existe na BD
+        while (artistValidation(artistaST, artista) == false) {
+            System.out.println("Artista não se encontra na BD!");
+            System.out.print("\nArtista: ");
+            artista = sca.nextLine();
+        }
+        System.out.print("\nGenero: ");
+        genero = sca.nextLine();
+        //Verifica se o genero existe na BD
+        while (genreValidation(generoST, genero) == false) {
+            System.out.println("Genero não se encontra na BD!");
+            System.out.print("\nGenero: ");
+            genero = sca.nextLine();
         }
 
-        return musicaST;
+        Musica m = new Musica(isrc, nome, daux, artista, genero);
+        musicaST.put(isrc, m);
+        Genero g = generoST.get(genero);
+        g.getGeneroMusicsST().put(isrc, m);
+        Artista a = artistaST.get(artista);
+        a.getArtistMusicSt().put(isrc, m);
 
     }
 
-    public static RedBlackBST_Projecto updateMusicSt(RedBlackBST_Projecto<String, Musica> musicaST, String key) {
-        In in = new In();
-        String ISRC = null, nome = null, artista = null, genero = null;
-        Float duracao = null;
+    public static void printMusicST(RedBlackBST_Projecto<String, Musica> musicaST) {
+        int i = 1;
+        for (String isrc : musicaST.keys()) {
+            Musica m = musicaST.get(isrc);
+            StdOut.println(m.getISRC() + " " + m.getNome() + " " + m.getDuracao()
+                    + " " + m.getArtista() + " " + m.getGenero() + "\n");
 
-        Musica m = new Musica(ISRC, nome, duracao, artista, genero);
-        m = (Musica) musicaST.get(key);
-        StdOut.print("O que pretende editar?");
-        StdOut.print("1-ISRC\n");
-        StdOut.print("2-Nome\n");
-        StdOut.print("3-Duração\n");
-        StdOut.print("4-Artista\n");
-        StdOut.print("5-Genero\n");
-        StdOut.print("6-Playlist\n");
-        StdOut.print("0-Sair\n");
-        // handle user commands
-        boolean quit = false;
-        int menuItem;
-        //do {
-        System.out.print("Escolha uma das opções: ");
-        menuItem = in.readInt();
-        switch (menuItem) {
-            case 1:
-                ISRC = StdIn.readString();
-                m.setISRC(ISRC);
-                musicaST.put(key, null);
-                musicaST.put(key, m);
-                break;
-            case 2:
-                nome = StdIn.readString();
-                m.setNome(nome);
-                musicaST.put(key, null);
-                musicaST.put(key, m);
-                break;
-            case 3:
-                duracao = StdIn.readFloat();
-                m.setDuracao(duracao);
-                musicaST.put(key, null);
-                musicaST.put(key, m);
-                break;
-            case 4:
-                artista = StdIn.readString();
-                m.setArtista(artista);
-                musicaST.put(key, null);
-                musicaST.put(key, m);
-            case 5:
-                genero = StdIn.readString();
-                m.setGenero(genero);
-                musicaST.put(key, null);
-                musicaST.put(key, m);
-            case 0:
-                quit = true;
-                break;
-            default:
-                System.out.println("Opção inválida");
+            i++;
+
         }
-        //}while(!quit);
-        return musicaST;
     }
 
-    public static RedBlackBST_Projecto deleteMusicSt(RedBlackBST_Projecto musicaST, Integer key) {
-        musicaST.delete(key);
-        return musicaST;
+    public static void updateMusicSt(RedBlackBST_Projecto<String, Musica> musicaST, SeparateChainingHashST1<String, Artista> artistaST,
+            RedBlackBST_Projecto<String, Genero> generoST) {
+        Scanner sca = new Scanner(System.in);
+        String isrc, param, editar;
+        printMusicST(musicaST);
+
+        System.out.print("\nMusica a editar: ");
+        isrc = sca.nextLine();
+        if (isrcValidation(musicaST, isrc) == true) {
+            System.out.println(isrc);
+            Musica m = musicaST.get(isrc);
+            if (m.getISRC().equals(isrc)) {
+                do {
+                    System.out.println("O que vai editar:  1-ISRC, 2-Nome, 3-Duração, 4-Artista, 5-Genero\n");
+                    param = sca.nextLine();
+                    switch (param) {
+                        case "1": {
+                            System.out.println("Novo ISRC: ");
+                            editar = sca.nextLine();
+                            m.setISRC(editar);
+                            return;
+                        }
+                        case "2": {
+                            System.out.println("Novo Nome: ");
+                            editar = sca.nextLine();
+                            m.setNome(editar);
+                            Artista a = artistaST.get(m.getArtista());
+                            a.getArtistMusicSt().get(isrc).setNome(editar);
+                            Genero g = generoST.get(m.getGenero());
+                            g.getGeneroMusicsST().get(isrc);
+                            return;
+                        }
+                        case "3": {
+                            System.out.println("Nova duração: ");
+                            editar = sca.nextLine();
+                            m.setDuracao(Float.parseFloat(editar));
+                            return;
+                        }
+                        case "4": {
+                            System.out.println("Novo artista: ");
+                            editar = sca.nextLine();
+
+                            if (artistValidation(artistaST, editar) == true) {
+                                m.setArtista(editar);
+                                Artista a = artistaST.get(m.getArtista());
+                                a.getArtistMusicSt().delete(isrc);
+                                Artista aaux = artistaST.get(editar);
+                                aaux.getArtistMusicSt().put(isrc, m);
+
+                            } else {
+                                System.out.println("Artista não se encontra na BD!");
+                            }
+
+                            return;
+                        }
+
+                        case "5": {
+                            System.out.println("Novo genero: ");
+                            editar = sca.nextLine();
+
+                            if (genreValidation(generoST, editar) == true) {
+                                m.setGenero(editar);
+                                Genero g = generoST.get(m.getGenero());
+                                g.getGeneroMusicsST().delete(isrc);
+                                Genero gaux = generoST.get(editar);
+                                gaux.getGeneroMusicsST().put(isrc, m);
+
+                            } else {
+                                System.out.println("Genero não se encontra na BD!");
+                            }
+                            return;
+                        }
+
+                    }
+                } while (param.equals("isrc") || param.equals("nome") || param.equals("duracao") || param.equals("genero") || param.equals("artista"));
+            }
+        } else {
+            System.out.println("Musica não se encontra numa playlist");
+        }
+
+    }
+
+    public static void deleteMusicSt(RedBlackBST_Projecto<String, Musica> musicaST,
+            SeparateChainingHashST1<String, Artista> artistaST, RedBlackBST_Projecto<String, Genero> generoST) {
+        Scanner sca = new Scanner(System.in);
+        String delete;
+        boolean check = false;
+        printMusicST(musicaST);
+        System.out.print("\nMusica a eliminar: ");
+        delete = sca.nextLine();
+        for (String isrc : musicaST.keys()) {
+            Musica m = (Musica) musicaST.get(isrc); // redblack artista genero
+            if (m.getNome().equals(delete)) {
+                musicaST.delete(isrc);
+                Artista a = artistaST.get(m.getArtista());
+                a.getArtistMusicSt().delete(isrc);
+                Genero g = generoST.get(m.getGenero());
+                g.getGeneroMusicsST().delete(isrc);
+            }
+
+        }
+        System.out.println("Musica removida com sucesso");
+
+    }
+
+    public static void saveMusicFile(RedBlackBST_Projecto<String, Musica> musicaST, String path) {
+        Out o = new Out(path);
+        for (String isrc : musicaST.keys()) {
+            Musica m = (Musica) musicaST.get(isrc);
+            o.println(m.getISRC() + ";" + m.getNome() + ";" + m.getDuracao() + ";" + m.getArtista() + ";" + m.getGenero());
+        }
+
     }
 
     /*
@@ -478,7 +563,7 @@ public class projeto_aed2_2016 {
             }
         }
     }
-    
+
     public static void printAll(RedBlackBST_Projecto<String, Musica> musicaST, RedBlackBST_Projecto<String, Genero> generoST,
             SeparateChainingHashST1<String, Artista> artistasST, RedBlackBST_Projecto<String, Playlist> playlistST,
             SeparateChainingHashST1<String, Utilizador> utilizadorST) {
