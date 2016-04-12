@@ -44,27 +44,31 @@ public class projeto_aed2_2016 {
         /* 
          *  Chamada dos Clientes 
          */
-        printMusicByGenres(generosST);
-        printMusicByArtist(artistasST);
-        printMusicByPlaylist(playlistsST);
-        printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST);
+        printMusicByGenres(generosST); //a funcionar
+        printMusicByArtist(artistasST); //a funcionar
+        printMusicByPlaylist(playlistsST); //a funcionar
+        printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST); //a funcionar
         //printMusicByHistory(historyST);
-        createGenreSt(generosST);
+        createGenreSt(generosST); //a funcionar
+        //updateGenreSt(generosST;
         //deleteGenreSt(generosST);
+        saveGenreSt(generosST, ".//data//generos.txt"); // a funcionar
         //createArtistSt(artistasST);
-        //readArtistSt(artistasST);
         //updateArtistSt(artistasST);
         //deleteArtistSt(artistasST);
-        //createMusicSt(musicasST);
-        //readMusicSt(musicasST);
-        //updateMusicSt(musicasST);
-        //deleteMusicSt(musicasST);
+        //saveArtistSt(artistasST, ".//data//artista.txt");
+        createMusicSt(musicasST, generosST, artistasST); //a funcionar
+        updateMusicSt(musicasST, artistasST, generosST); //a funcionar
+        deleteMusicSt(musicasST, artistasST, generosST); //a funcionar
+        saveMusicSt(musicasST, ".//data//musicas.txt"); //a funcionar
         //createUsersSt(utilizadoresST);
-        //readUsersSt(utilizadoresST);
         //updateUsersSt(utilizadoresST);
         //deleteUsersSt(utilizadoresST);
+        //saveUserSt(utilizadoresST, ".//data//pessoas.txt");
     }
-
+    /*
+    *   Loads
+    */
     public static void loadFromFilePlaylistST(RedBlackBST_Projecto<String, Playlist> playlistST, SeparateChainingHashST1<String, Utilizador> utilizadoresST, RedBlackBST_Projecto<String, Musica> musicasST, String path) {
         In in = new In(path); // abertura do ficheiro/stream de entrada
         while (!in.isEmpty()) {
@@ -294,7 +298,7 @@ public class projeto_aed2_2016 {
                             return;
                         }
                         case "2": {
-                            System.out.println("Novo Nome: ");
+                            System.out.println("Novo nome: ");
                             editar = sca.nextLine();
                             m.setNome(editar);
                             Artista a = artistaST.get(m.getArtista());
@@ -376,7 +380,7 @@ public class projeto_aed2_2016 {
 
     }
 
-    public static void saveMusicFile(RedBlackBST_Projecto<String, Musica> musicaST, String path) {
+    public static void saveMusicSt(RedBlackBST_Projecto<String, Musica> musicaST, String path) {
         Out o = new Out(path);
         for (String isrc : musicaST.keys()) {
             Musica m = (Musica) musicaST.get(isrc);
