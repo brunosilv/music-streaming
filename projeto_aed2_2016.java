@@ -42,9 +42,10 @@ public class projeto_aed2_2016 {
         /* 
          *  Chamada dos Clientes 
          */
-        //printMusicByGenres(generosST);
-        //printMusicByArtist(artistasST);
-        //printMusicByPlaylist(playlistsST);
+        ///printMusicByGenres(generosST);
+        ///printMusicByArtist(artistasST);
+        ///printMusicByPlaylist(playlistsST);
+        ///printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST);
         //printMusicByHistory(historyST);
         //createGenreSt(generosST);
         //readGenreSt(generosST);
@@ -148,6 +149,8 @@ public class projeto_aed2_2016 {
     /*
     Create, Read, Update, Delete (Genero)
      */
+    
+    
     public static RedBlackBST_Projecto createGenreSt(RedBlackBST_Projecto generoST) {
 
         In in = new In(".//data//generos.txt"); // abertura do ficheiro/stream de entrada
@@ -471,8 +474,53 @@ public class projeto_aed2_2016 {
 
             for (String isrc : musicas.keys()) {
                 Musica m = (Musica) musicas.get(isrc);
-                StdOut.println("    Musica: " + m.getNome());
+                StdOut.println(m.getNome());
             }
         }
+    }
+    
+    public static void printAll(RedBlackBST_Projecto<String, Musica> musicaST, RedBlackBST_Projecto<String, Genero> generoST,
+            SeparateChainingHashST1<String, Artista> artistasST, RedBlackBST_Projecto<String, Playlist> playlistST,
+            SeparateChainingHashST1<String, Utilizador> utilizadorST) {
+        System.out.println("\nListar musicas:");
+        for (String isrc : musicaST.keys()) {
+            Musica m = (Musica) musicaST.get(isrc);
+            System.out.println("- " + m.getNome());
+        }
+
+        System.out.println("\nListar artistas:");
+        for (String username : artistasST.keys()) {
+            Artista a = (Artista) artistasST.get(username);
+            System.out.println("- " + a.getNome());
+        }
+
+        System.out.println("\nListar genero:");
+        for (String genre : generoST.keys()) {
+            Genero g = (Genero) generoST.get(genre);
+            System.out.println("- " + g.getGenero());
+        }
+
+        System.out.println("\nListar utilizadores:");
+        for (String user : utilizadorST.keys()) {
+            Utilizador u = (Utilizador) utilizadorST.get(user);
+            System.out.println("- " + u.getNome());
+        }
+
+        System.out.println("\nList of playlists:");
+        for (String playlist : playlistST.keys()) {
+            Playlist p = (Playlist) playlistST.get(playlist);
+            System.out.println("- " + p.getNome());
+        }
+
+    }
+
+    public static boolean verificarISRC(RedBlackBST_Projecto<String, Musica> musicaST, String isrc) {
+        for (String key : musicaST.keys()) {
+            Musica m = musicaST.get(key);
+            if (m.getISRC().equals(isrc)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
