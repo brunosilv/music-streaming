@@ -36,9 +36,9 @@ R7 [Feito].Remover músicas  da  base  de  dados  com  validação  da sua  remo
 R8.Popular  as  diversas  STs  da  aplicação  com  o  conteúdo  de  ficheiros  de  texto  de 
 entrada  (restore/ load da  informação  em  ficheiro).  Gerar  dados  sintéticos  de teste na própria aplicação (eg: gerar utilizadores fictícios) para popular as várias STs.
 
-R9.Fazer  o  output (dump)  de  toda  a  informação  para  ficheiros  de  textos,  isto  é, de utilizadores, artistas, músicas, playlists e de todas as outras STs.
+R9 [Feito].Fazer  o  output (dump)  de  toda  a  informação  para  ficheiros  de  textos,  isto  é, de utilizadores, artistas, músicas, playlists e de todas as outras STs.
 
-R10 [Feito].Correr casos de  teste  (funções  de  teste)  para  todas  as  funcionalidades implementadas nos  requisitos  anteriores,  considerando,  para  o  efeito,  uma  ou 
+R10.Correr casos de  teste  (funções  de  teste)  para  todas  as  funcionalidades implementadas nos  requisitos  anteriores,  considerando,  para  o  efeito,  uma  ou 
 várias   classes   de   teste   específicas.
 Deverá   implementar   mecanismos   / instrumentos  de  medição  temporal  da  execução  das  principais  funções  de inserção
 e  pesquisa  nesses  testes.  Esses  cenários  deverão  incluir  nos  testes  a leitura  e  escrita  de  ficheiros  com  dados  de  input  (batch  inputdata)  e/ou
