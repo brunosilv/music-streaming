@@ -5,37 +5,54 @@
  */
 package edu.ufp.inf.aed2.project1;
 
-import edu.ufp.inf.aed2.project1.Musica;
 
 /**
  *
  * @author bluis
  */
 public class Playlist {
+
     String nome;
-   
+    String username;
+
     private RedBlackBST_Projecto<String, Musica> playlistSt = new RedBlackBST_Projecto<>();//musicas nesta playlist
-    
+
     /**
      *
      * @param nome
+     * @param username
      */
-    public Playlist(String nome) {
+    public Playlist(String nome, String username) {
         this.nome = nome;
+        this.username = username;
     }
-    
 
 //Gets e Sets
 
     /**
      *
+     * @return
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     *
+     * @param username
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     *
      * @param e
      */
-
-     public void musica (Musica e) {
-        this.playlistSt.put(e.getISRC(),e);
+    public void musica(Musica e) {
+        this.playlistSt.put(e.getISRC(), e);
     }
-    
+
     /**
      *
      * @return
@@ -67,7 +84,5 @@ public class Playlist {
     public void setPlaylistSt(RedBlackBST_Projecto<String, Musica> playlistSt) {
         this.playlistSt = playlistSt;
     }
-
-
 
 }

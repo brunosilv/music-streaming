@@ -5,10 +5,6 @@
  */
 package edu.ufp.inf.aed2.project1;
 
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.RedBlackBST;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 
 /**
  *

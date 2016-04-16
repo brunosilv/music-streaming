@@ -40,7 +40,8 @@ public class projeto_aed2_2016 {
         loadFromFileArtistasST(artistasST, ".//data//artista.txt");
         loadFromFileUtilizadoresST(utilizadoresST, ".//data//pessoas.txt");
         loadFromFileMusicasST(musicasST, generosST, artistasST, playlistsST, utilizadoresST, ".//data//musicas.txt");
-        loadFromFilePlaylistST(playlistsST, utilizadoresST, musicasST, ".//data//playlists.txt");
+        loadFromFilePlaylistST(playlistsST, musicasST, ".//data//playlists.txt");
+        loadFromFileHistory(utilizadoresST, ".//data//historico.txt");
         /* 
          *  Chamada dos Clientes 
          */
@@ -50,17 +51,15 @@ public class projeto_aed2_2016 {
         //printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST); //a funcionar
         //printMusicByHistory(historyST);
         //createGenreSt(generosST); //a funcionar
-        //updateGenreSt(generosST;
-        //deleteGenreSt(generosST);
         //saveGenreSt(generosST, ".//data//generos.txt"); // a funcionar
         //createArtistSt(artistasST);
         //updateArtistSt(artistasST);
         //deleteArtistSt(artistasST);
         //saveArtistSt(artistasST, ".//data//artista.txt");
-        createMusicSt(musicasST, generosST, artistasST); //a funcionar
+        //createMusicSt(musicasST, generosST, artistasST); //a funcionar
         //updateMusicSt(musicasST, artistasST, generosST); //a funcionar
-        deleteMusicSt(musicasST, artistasST, generosST); //a funcionar
-        saveMusicSt(musicasST, ".//data//musicas.txt"); //a funcionar
+        //deleteMusicSt(musicasST, artistasST, generosST); //a funcionar
+        //saveMusicSt(musicasST, ".//data//musicas.txt"); //a funcionar
         //createUsersSt(utilizadoresST);
         //updateUsersSt(utilizadoresST);
         //deleteUsersSt(utilizadoresST);
@@ -72,31 +71,45 @@ public class projeto_aed2_2016 {
 
     /**
      *
-     * @param playlistST
-     * @param utilizadoresST
-     * @param musicasST
+     * @param utilizadorST
      * @param path
      */
 
-    public static void loadFromFilePlaylistST(RedBlackBST_Projecto<String, Playlist> playlistST, SeparateChainingHashST1<String, Utilizador> utilizadoresST, RedBlackBST_Projecto<String, Musica> musicasST, String path) {
-        In in = new In(path); // abertura do ficheiro/stream de entrada
+     public static void loadFromFileHistory(SeparateChainingHashST1<String, Utilizador> utilizadorST, String path) {
+        In in = new In(path);
+        while (!in.isEmpty()) {
+            String[] texto = in.readLine().split(";");
+            String username = texto[0];
+            String date = texto[1];
+            String isrc = texto[2];
+            Utilizador u = utilizadorST.get(username);
+            u.getHistoricoST().put(date, isrc);
+
+        }
+    }
+    
+    /**
+     *
+     * @param playlistsST
+     * @param musicasST
+     * @param path
+     */
+    public static void loadFromFilePlaylistST(RedBlackBST_Projecto<String, Playlist> playlistsST, RedBlackBST_Projecto<String, Musica> musicasST, String path) {
+        In in = new In(path);
+
         while (!in.isEmpty()) {
             String[] texto = in.readLine().split(";");
             String nome = texto[0];
             String username = texto[1];
-
-            Playlist p = new Playlist(nome);
-            playlistST.put(nome, p);
-
-            Utilizador u = utilizadoresST.get(username);
-            u.getUserplSt().put(nome, p);
-            for (int i = 1; i < texto.length; i++) {
-                if (musicasST.contains(texto[i])) {
-                    playlistST.get(nome).musica(musicasST.get(texto[i]));
-                }
+            int numMusics = texto.length - 2;
+            Playlist p = new Playlist(nome, username);
+            playlistsST.put(username, p);
+            for (int i = 0; i < numMusics; i++) {
+                Musica m = (Musica) musicasST.get(texto[i + 2]);
+                p.getPlaylistSt().put(texto[i + 2], m);
             }
-
         }
+
     }
 
     /**
@@ -229,7 +242,23 @@ public class projeto_aed2_2016 {
     public static boolean artistValidation(SeparateChainingHashST1<String, Artista> artistaST, String artista) {
         for (String username : artistaST.keys()) {
             Artista a = (Artista) artistaST.get(username);
-            if (a.getUsername().equals(artista)) {
+            if (a.getNome().equals(artista)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     *
+     * @param utilizadorST
+     * @param utilizador
+     * @return
+     */
+    public static boolean userValidation(SeparateChainingHashST1<String, Utilizador> utilizadorST, String utilizador) {
+        for (String username : utilizadorST.keys()) {
+            Utilizador u = (Utilizador) utilizadorST.get(username);
+            if (u.getUsername().equals(utilizador)) {
                 return true;
             }
         }
@@ -460,7 +489,7 @@ public class projeto_aed2_2016 {
         System.out.print("\nMusica a eliminar: ");
         delete = sca.nextLine();
         for (String isrc : musicaST.keys()) {
-            Musica m = (Musica) musicaST.get(isrc); // redblack artista genero
+            Musica m = (Musica) musicaST.get(isrc);
             if (m.getNome().equals(delete)) {
                 musicaST.delete(isrc);
                 Artista a = artistaST.get(m.getArtista());
@@ -760,21 +789,5 @@ public class projeto_aed2_2016 {
             System.out.println("- " + p.getNome());
         }
 
-    }
-
-    /**
-     *
-     * @param musicaST
-     * @param isrc
-     * @return
-     */
-    public static boolean verificarISRC(RedBlackBST_Projecto<String, Musica> musicaST, String isrc) {
-        for (String key : musicaST.keys()) {
-            Musica m = musicaST.get(key);
-            if (m.getISRC().equals(isrc)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

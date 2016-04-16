@@ -5,11 +5,6 @@
  */
 package edu.ufp.inf.aed2.project1;
 
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.LinearProbingHashST;
-import edu.princeton.cs.algs4.RedBlackBST;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 
 /**
  *
@@ -21,7 +16,7 @@ public class Utilizador {
     String username;
     String mail;
    
-    private RedBlackBST_Projecto<String, Playlist> userplSt = new RedBlackBST_Projecto<>();//playlists deste user
+    private RedBlackBST_Projecto<String, String> historicoST = new RedBlackBST_Projecto<>();
     
     /**
      *
@@ -39,18 +34,19 @@ public class Utilizador {
      *
      * @return
      */
-    public RedBlackBST_Projecto<String, Playlist> getUserplSt() {
-        return userplSt;
+    public RedBlackBST_Projecto<String, String> getHistoricoST() {
+        return historicoST;
     }
 
     /**
      *
-     * @param userplST
+     * @param historicoST
      */
-    public void setUserplSt(RedBlackBST_Projecto<String, Playlist> userplST) {
-        this.userplSt = userplST;
+    public void setHistoricoST(RedBlackBST_Projecto<String, String> historicoST) {
+        this.historicoST = historicoST;
     }
 
+  
     /**
      *
      * @return
