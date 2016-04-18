@@ -9,6 +9,8 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Out;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -49,33 +51,30 @@ public class projeto_aed2_2016 {
         //printMusicByArtist(artistasST); //a funcionar
         //printMusicByPlaylist(playlistsST); //a funcionar
         //printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST); //a funcionar
-        //printMusicByHistory(historyST);
         //createGenreSt(generosST); //a funcionar
         //saveGenreSt(generosST, ".//data//generos.txt"); // a funcionar
-        //createArtistSt(artistasST);
-        //updateArtistSt(artistasST);
-        //deleteArtistSt(artistasST);
-        //saveArtistSt(artistasST, ".//data//artista.txt");
-        //createMusicSt(musicasST, generosST, artistasST); //a funcionar
-        //updateMusicSt(musicasST, artistasST, generosST); //a funcionar
-        //deleteMusicSt(musicasST, artistasST, generosST); //a funcionar
-        //saveMusicSt(musicasST, ".//data//musicas.txt"); //a funcionar
+        //createArtistSt(artistasST, generosST); // a funcionar
+        //saveArtistSt(artistasST, ".//data//artista.txt"); // a funcionar
+        //createMusicSt(musicasST, generosST, artistasST); // a funcionar
+        //updateMusicSt(musicasST, artistasST, generosST); // a funcionar
+        //deleteMusicSt(musicasST, artistasST, generosST); // a funcionar
+        //saveMusicSt(musicasST, ".//data//musicas.txt"); // a funcionar
         //createUsersSt(utilizadoresST);
-        //updateUsersSt(utilizadoresST);
-        //deleteUsersSt(utilizadoresST);
-        //saveUserSt(utilizadoresST, ".//data//pessoas.txt");
+        //saveUserSt(utilizadoresST, ".//data//pessoas.txt"); // a funcionar
+        playMusic(musicasST, utilizadoresST, "arpinto"); // a funcionar
+        savePlayedMusics(utilizadoresST, ".//data//historico.txt" , "arpinto"); // a funcionar
     }
+
     /*
     *   Loads
-    */
+     */
 
     /**
      *
      * @param utilizadorST
      * @param path
      */
-
-     public static void loadFromFileHistory(SeparateChainingHashST1<String, Utilizador> utilizadorST, String path) {
+    public static void loadFromFileHistory(SeparateChainingHashST1<String, Utilizador> utilizadorST, String path) {
         In in = new In(path);
         while (!in.isEmpty()) {
             String[] texto = in.readLine().split(";");
@@ -87,7 +86,7 @@ public class projeto_aed2_2016 {
 
         }
     }
-    
+
     /**
      *
      * @param playlistsST
@@ -199,14 +198,12 @@ public class projeto_aed2_2016 {
     /*
      *  Validações
      */
-
     /**
      *
      * @param musicaST
      * @param isrc
      * @return
      */
-
     public static boolean isrcValidation(RedBlackBST_Projecto<String, Musica> musicaST, String isrc) {
         for (String key : musicaST.keys()) {
             Musica m = musicaST.get(key);
@@ -248,7 +245,7 @@ public class projeto_aed2_2016 {
         }
         return false;
     }
-    
+
     /**
      *
      * @param utilizadorST
@@ -268,12 +265,10 @@ public class projeto_aed2_2016 {
     /*
      *  Genero
      */
-
     /**
      *
      * @param generoST
      */
-
     public static void createGenreSt(RedBlackBST_Projecto<String, Genero> generoST) {
 
         String genero, desc;
@@ -310,27 +305,14 @@ public class projeto_aed2_2016 {
     }
 
     /**
-     *
-     * @param generoST
-     * @param key
-     * @return
+     * Musica
      */
-    public static RedBlackBST_Projecto deleteGenreSt(RedBlackBST_Projecto generoST, Integer key) {
-        generoST.delete(key);
-        return generoST;
-    }
-
-    /*
-     *  Musica
-     */
-
     /**
      *
      * @param musicaST
      * @param generoST
      * @param artistaST
      */
-
     public static void createMusicSt(RedBlackBST_Projecto<String, Musica> musicaST, RedBlackBST_Projecto<String, Genero> generoST,
             SeparateChainingHashST1<String, Artista> artistaST) {
         String isrc, nome, artista, genero;
@@ -484,7 +466,7 @@ public class projeto_aed2_2016 {
             SeparateChainingHashST1<String, Artista> artistaST, RedBlackBST_Projecto<String, Genero> generoST) {
         Scanner sca = new Scanner(System.in);
         String delete;
-        boolean check = false;
+        //boolean check = false;
         printMusicST(musicaST);
         System.out.print("\nMusica a eliminar: ");
         delete = sca.nextLine();
@@ -517,16 +499,15 @@ public class projeto_aed2_2016 {
 
     }
 
-    /*
-    Create, Read, Update, Delete (Utilizador)
+    /**
+     * Utilizador
      */
-
+    
     /**
      *
      * @param utilizadorST
      * @return
      */
-
     public static SeparateChainingHashST1 createUsersSt(SeparateChainingHashST1 utilizadorST) {
 
         In in = new In(".//data//pessoas.txt"); // abertura do ficheiro/stream de entrada
@@ -550,133 +531,59 @@ public class projeto_aed2_2016 {
      * @param key
      * @return
      */
-    public static SeparateChainingHashST1 updateUserSt(SeparateChainingHashST1<String, Utilizador> utilizadorST, String key) {
-        In in = new In();
-        String nome = null, username = null, email = null;
-
-        Utilizador u = new Utilizador(nome, username, email);
-        u = (Utilizador) utilizadorST.get(key);
-        StdOut.print("O que pretende editar");
-        StdOut.print("1-Nome\n");
-        StdOut.print("2-Username\n");
-        StdOut.print("3-Email\n");
-        StdOut.print("0-Sair\n");
-        // handle user commands
-        boolean quit = false;
-        int menuItem;
-        //do {
-        System.out.print("Escolha uma das opções: ");
-        menuItem = in.readInt();
-        switch (menuItem) {
-            case 1:
-                nome = StdIn.readString();
-                u.setNome(nome);
-                utilizadorST.put(key, null);
-                utilizadorST.put(key, u);
-                break;
-            case 2:
-                username = StdIn.readString();
-                u.setUsername(username);
-                utilizadorST.put(key, null);
-                utilizadorST.put(key, u);
-                break;
-            case 3:
-                email = StdIn.readString();
-                u.setMail(email);
-                utilizadorST.put(key, null);
-                utilizadorST.put(key, u);
-            case 0:
-                quit = true;
-                break;
-            default:
-                System.out.println("Opção inválida");
-        }
-        //}while(!quit);
-        return utilizadorST;
-    }
-
-    /**
-     *
-     * @param utilizadorST
-     * @param key
-     * @return
-     */
     public static SeparateChainingHashST1 deleteUserSt(SeparateChainingHashST1 utilizadorST, Integer key) {
         utilizadorST.delete(key);
         return utilizadorST;
     }
 
-    /*
-    Create, Read, Update, Delete (Artista)
-     */
-
     /**
      *
-     * @param artistaST
-     * @return
+     * @param artistasST
+     * @param path
      */
-
-    public static SeparateChainingHashST1 createArtistsSt(SeparateChainingHashST1 artistaST) {
-
-        In in = new In(".//data//artista.txt"); // abertura do ficheiro/stream de entrada
-
-        while (!in.isEmpty()) {
-            String[] texto = in.readLine().split(";");
-            String username = texto[0];
-            String nome = texto[1];
-            String generomusical = texto[2];
-
-            Artista a = new Artista(username, nome, generomusical);
-            artistaST.put(username, a);
+    public static void saveArtistFile(SeparateChainingHashST1<String, Artista> artistasST, String path) {
+        Out o = new Out(path);
+        for (String username : artistasST.keys()) {
+            Artista a = (Artista) artistasST.get(username);
+            o.println(a.getNome() + ";" + a.getUsername() + ";" + a.getGeneromusical());
         }
-
-        return artistaST;
 
     }
 
     /**
-     *
-     * @param artistaST
-     * @param key
-     * @return
+     * Artista
      */
-    public static SeparateChainingHashST1 updateArtistSt(SeparateChainingHashST1<String, Artista> artistaST, String key) {
-        In in = new In();
-        String username = null, nome = null, generomusical = null;
+    /**
+     *
+     * @param artistasST
+     * @param generosST
+     */
+    public static void createArtistSt(SeparateChainingHashST1<String, Artista> artistasST, RedBlackBST_Projecto<String, Genero> generosST) {
+        String artista, username, genero;
 
-        Artista a = new Artista(username, nome, generomusical);
-        a = (Artista) artistaST.get(key);
-        StdOut.print("O que pretende editar");
-        StdOut.print("1-Nome\n");
-        StdOut.print("2-Genero Musica do Artista\n");
-        StdOut.print("0-Sair\n");
-        // handle user commands
-        boolean quit = false;
-        int menuItem;
-        //do {
-        System.out.print("Escolha uma das opções: ");
-        menuItem = in.readInt();
-        switch (menuItem) {
-            case 1:
-                nome = StdIn.readString();
-                a.setNome(nome);
-                artistaST.put(key, null);
-                artistaST.put(key, a);
-                break;
-            case 2:
-                generomusical = StdIn.readString();
-                a.setGeneromusical(generomusical);
-                artistaST.put(key, null);
-                artistaST.put(key, a);
-                break;
-            case 0:
-                quit = true;
-                break;
-            default:
-                System.out.println("Opção inválida");
+        Scanner sca = new Scanner(System.in);
+
+        System.out.print("Artista: ");
+        artista = sca.nextLine();
+        System.out.println("Username: ");
+        username = sca.nextLine();
+        while (artistValidation(artistasST, username) == true) {
+            System.out.println("Artista já existe na BD!");
+            System.out.print("Artista: ");
+            artista = sca.nextLine();
+            System.out.println("\nUsername: ");
+            username = sca.nextLine();
         }
-        //}while(!quit);
-        return artistaST;
+        System.out.print("\nGenero: ");
+        genero = sca.nextLine();
+        while (genreValidation(generosST, genero) == false) {
+            System.out.println("Genero não se econtra na BD!");
+            System.out.print("Genero: ");
+            genero = sca.nextLine();
+        }
+        Artista a = new Artista(artista, username, genero);
+        artistasST.put(username, a);
+
     }
 
     /**
@@ -690,6 +597,20 @@ public class projeto_aed2_2016 {
         return generoST;
     }
 
+    /**
+     *
+     * @param artistasST
+     * @param path
+     */
+    public static void saveArtistSt(SeparateChainingHashST1<String, Artista> artistasST, String path) {
+        Out o = new Out(path);
+        for (String username : artistasST.keys()) {
+            Artista a = (Artista) artistasST.get(username);
+            o.println(a.getNome() + ";" + a.getUsername() + ";" + a.getGeneromusical());
+        }
+
+    }
+
     /*
     Testes e Listagens
      */
@@ -698,7 +619,6 @@ public class projeto_aed2_2016 {
      *
      * @param generoST
      */
-
     public static void printMusicByGenres(RedBlackBST_Projecto<String, Genero> generoST) {
         StdOut.print("\n\nLista de Musica por Generos:\n\n");
         for (String g : generoST.inOrder()) {
@@ -787,6 +707,41 @@ public class projeto_aed2_2016 {
         for (String playlist : playlistST.keys()) {
             Playlist p = (Playlist) playlistST.get(playlist);
             System.out.println("- " + p.getNome());
+        }
+
+    }
+
+    /**
+     *
+     * @param musicasST
+     * @param utilizadoresST
+     * @param user
+     */
+    public static void playMusic(RedBlackBST_Projecto<String, Musica> musicasST, SeparateChainingHashST1<String, Utilizador> utilizadoresST, String user) {
+
+        Scanner sca = new Scanner(System.in);
+        Date d = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyyMMddhhmmss");
+        String param;
+        printMusicST(musicasST);
+        System.out.println("\n\nMusica a ouvir: ");
+        param = sca.nextLine();
+        for (String key : musicasST.keys()) {
+            Musica m = musicasST.get(key);
+            if (m.getISRC().equals(param)) {
+                Utilizador u = utilizadoresST.get(user);
+                u.getHistoricoST().put(ft.format(d), param);
+
+            }
+        }
+    }
+    
+    public static void savePlayedMusics(SeparateChainingHashST1<String, Utilizador> utilizadoresST, String path, String user) {
+        Out o = new Out(path);
+        Utilizador u = utilizadoresST.get(user);
+        RedBlackBST_Projecto<String, String> h = u.getHistoricoST();
+        for (String key : h.keys()) {
+            o.println(user + ";" + key + ";" + h.get(key));
         }
 
     }
