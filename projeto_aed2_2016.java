@@ -7,7 +7,6 @@ package edu.ufp.inf.aed2.project1;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Out;
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,7 +49,7 @@ public class projeto_aed2_2016 {
         //printMusicByGenres(generosST); //a funcionar
         //printMusicByArtist(artistasST); //a funcionar
         //printMusicByPlaylist(playlistsST); //a funcionar
-        //printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST); //a funcionar
+        printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST); //a funcionar
         //createGenreSt(generosST); //a funcionar
         //saveGenreSt(generosST, ".//data//generos.txt"); // a funcionar
         //createArtistSt(artistasST, generosST); // a funcionar
@@ -61,14 +60,14 @@ public class projeto_aed2_2016 {
         //saveMusicSt(musicasST, ".//data//musicas.txt"); // a funcionar
         //createUsersSt(utilizadoresST);
         //saveUserSt(utilizadoresST, ".//data//pessoas.txt"); // a funcionar
-        playMusic(musicasST, utilizadoresST, "arpinto"); // a funcionar
-        savePlayedMusics(utilizadoresST, ".//data//historico.txt" , "arpinto"); // a funcionar
+        //playMusic(musicasST, utilizadoresST, "jtorres"); // a funcionar
+        //savePlayedMusics(utilizadoresST, ".//data//historico.txt" , "jtorres"); // a funcionar
+        //musicPlaylistSearch(playlistsST, musicasST);// a funcionar
     }
 
     /*
-    *   Loads
+     *   Loads
      */
-
     /**
      *
      * @param utilizadorST
@@ -199,6 +198,7 @@ public class projeto_aed2_2016 {
      *  Validações
      */
     /**
+     * Validação se o IRSC existe;
      *
      * @param musicaST
      * @param isrc
@@ -215,6 +215,7 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Validação se o genero existe;
      *
      * @param generosST
      * @param genero
@@ -231,6 +232,7 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Validação se o artista existe;
      *
      * @param artistaST
      * @param artista
@@ -247,6 +249,7 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Validação se o utilizador existe;
      *
      * @param utilizadorST
      * @param utilizador
@@ -266,6 +269,7 @@ public class projeto_aed2_2016 {
      *  Genero
      */
     /**
+     * Verifica se o genero existe senão existir cria novo;
      *
      * @param generoST
      */
@@ -291,6 +295,7 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Grava no ficheiro generos.txt;
      *
      * @param generoST
      * @param path
@@ -304,10 +309,11 @@ public class projeto_aed2_2016 {
 
     }
 
-    /**
+    /*
      * Musica
      */
     /**
+     * Criação de musicas, verifica se genero e artista se encontram na BD;
      *
      * @param musicaST
      * @param generoST
@@ -353,6 +359,7 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Imprime musicas;
      *
      * @param musicaST
      */
@@ -369,6 +376,8 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Verifica se a musica (ISRC) existe se sim pg o que editar, faz a
+     * verificação de genero e de artista;
      *
      * @param musicaST
      * @param artistaST
@@ -457,6 +466,7 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Remove musica do ficheiro musicas.txt;
      *
      * @param musicaST
      * @param artistaST
@@ -466,7 +476,6 @@ public class projeto_aed2_2016 {
             SeparateChainingHashST1<String, Artista> artistaST, RedBlackBST_Projecto<String, Genero> generoST) {
         Scanner sca = new Scanner(System.in);
         String delete;
-        //boolean check = false;
         printMusicST(musicaST);
         System.out.print("\nMusica a eliminar: ");
         delete = sca.nextLine();
@@ -486,6 +495,7 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Grava no ficheiro musicas.txt;
      *
      * @param musicaST
      * @param path
@@ -499,11 +509,11 @@ public class projeto_aed2_2016 {
 
     }
 
-    /**
+    /*
      * Utilizador
      */
-    
     /**
+     * Cria utilizador no ficheiro pessoas.txt;
      *
      * @param utilizadorST
      * @return
@@ -526,6 +536,8 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Remove do ficheiro pessoas.txt, metodo manual key dada na chamada do
+     * cliente;
      *
      * @param utilizadorST
      * @param key
@@ -537,23 +549,25 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Grava no ficheiro pessoas.txt;
      *
-     * @param artistasST
+     * @param utilizadoresST
      * @param path
      */
-    public static void saveArtistFile(SeparateChainingHashST1<String, Artista> artistasST, String path) {
+    public static void saveUserSt(SeparateChainingHashST1<String, Utilizador> utilizadoresST, String path) {
         Out o = new Out(path);
-        for (String username : artistasST.keys()) {
-            Artista a = (Artista) artistasST.get(username);
-            o.println(a.getNome() + ";" + a.getUsername() + ";" + a.getGeneromusical());
+        for (String username : utilizadoresST.keys()) {
+            Utilizador u = (Utilizador) utilizadoresST.get(username);
+            o.println(u.getNome() + ";" + u.getUsername() + ";" + u.getMail());
         }
 
     }
 
-    /**
+    /*
      * Artista
      */
     /**
+     * Faz a validação se artista existe senão existir cria;
      *
      * @param artistasST
      * @param generosST
@@ -587,6 +601,8 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Remove do ficheiro artista.txt, metodo manual key dada na chamada do
+     * cliente;
      *
      * @param generoST
      * @param key
@@ -598,6 +614,7 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Grava no ficheiro artista.txt
      *
      * @param artistasST
      * @param path
@@ -612,10 +629,10 @@ public class projeto_aed2_2016 {
     }
 
     /*
-    Testes e Listagens
+     *  Testes e Listagens
      */
-
     /**
+     * Lista Musicas por generos
      *
      * @param generoST
      */
@@ -634,6 +651,7 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Lista musicas por artistas
      *
      * @param artistaST
      */
@@ -652,23 +670,26 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Lista musicas por playlists
      *
      * @param playlistST
      */
     public static void printMusicByPlaylist(RedBlackBST_Projecto<String, Playlist> playlistST) {
-        StdOut.print("\n\nLista de Musicas por Playlist:\n\n");
-        for (String p : playlistST.inOrder()) {
-            StdOut.println("Playlist: " + p);
-            RedBlackBST_Projecto<String, Musica> musicas = playlistST.get(p).getPlaylistSt();
+        StdOut.print("\n\nLista de Playlists por Utilizadores:\n\n");
+        for (String username : playlistST.keys()) {
+            Playlist p = (Playlist) playlistST.get(username);
+            System.out.println(p.getNome() + " de " + p.getUsername());
+            RedBlackBST_Projecto<String, Musica> musicas = playlistST.get(username).getPlaylistSt();
 
             for (String isrc : musicas.keys()) {
                 Musica m = (Musica) musicas.get(isrc);
-                StdOut.println(m.getNome());
+                StdOut.println("   Musicas: " + m.getNome());
             }
         }
     }
 
     /**
+     * Lista todas as ST´s
      *
      * @param musicaST
      * @param generoST
@@ -703,7 +724,7 @@ public class projeto_aed2_2016 {
             System.out.println("- " + u.getNome());
         }
 
-        System.out.println("\nList of playlists:");
+        System.out.println("\nListar playlists:");
         for (String playlist : playlistST.keys()) {
             Playlist p = (Playlist) playlistST.get(playlist);
             System.out.println("- " + p.getNome());
@@ -712,6 +733,7 @@ public class projeto_aed2_2016 {
     }
 
     /**
+     * Metodo para gerar historico, utilizador é definido na chamada de cliente;
      *
      * @param musicasST
      * @param utilizadoresST
@@ -735,13 +757,51 @@ public class projeto_aed2_2016 {
             }
         }
     }
-    
+
+    /**
+     * Guarda no ficheiro historico.txt, utilizador definido na chamada do
+     * cliente;
+     *
+     * @param utilizadoresST
+     * @param path
+     * @param user
+     */
     public static void savePlayedMusics(SeparateChainingHashST1<String, Utilizador> utilizadoresST, String path, String user) {
         Out o = new Out(path);
         Utilizador u = utilizadoresST.get(user);
         RedBlackBST_Projecto<String, String> h = u.getHistoricoST();
         for (String key : h.keys()) {
             o.println(user + ";" + key + ";" + h.get(key));
+        }
+
+    }
+
+    /**
+     * Procura se a musica existe em alguma playlist;
+     *
+     * @param playlistsST
+     * @param musicasST
+     */
+    public static void musicPlaylistSearch(RedBlackBST_Projecto<String, Playlist> playlistsST, RedBlackBST_Projecto<String, Musica> musicasST) {
+        Scanner sca = new Scanner(System.in);
+        String param;
+        System.out.print("Musica: ");
+        param = sca.nextLine();
+        if (isrcValidation(musicasST, param) == true) {
+            for (String username : playlistsST.keys()) {
+                Playlist pl = (Playlist) playlistsST.get(username);
+                RedBlackBST_Projecto<String, Musica> musicas = playlistsST.get(username).getPlaylistSt();
+                for (String isrc : musicas.keys()) {
+                    Musica m = (Musica) musicas.get(isrc);
+                    Playlist p = (Playlist) playlistsST.get(username);
+                    if (p.getPlaylistSt().get(isrc).getISRC().equals(param)) {
+                        System.out.println("Musica encontra-se na playlist: " + p.getNome());
+                    }
+                }
+
+            }
+        } else {
+            System.out.println("Musica não se encontra na BD!");
         }
 
     }
