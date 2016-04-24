@@ -23,7 +23,7 @@ R2 [Feito].Usar  funções  e  tabelas  de  hash em,  pelo  menos,  duas  STs  c
 
 R3 [Feito].Usar  BSTs  balanceadas  (redblack)  em,  pelo  menos,  as  STs cuja  chave  é ordenável como tempos ou ordem.
 
-R4 [WIP-80%].Criar  funções  para  inserir,  remover,  editar  e  listar  tudo,  para  as  várias  STs consideradas: utilizadores,   músicas,   artistas,   géneros   musicais   e   playlists presentes na base de dados.
+R4 [Feito].Criar  funções  para  inserir,  remover,  editar  e  listar  tudo,  para  as  várias  STs consideradas: utilizadores,   músicas,   artistas,   géneros   musicais   e   playlists presentes na base de dados.
 
 R5 [Feito].Validar  que  todas  as  músicas que  são  consideradas  noutras  STs  existem  na  ST músicas.
 
