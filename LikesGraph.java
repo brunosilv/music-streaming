@@ -80,7 +80,7 @@ public class LikesGraph {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Edge e : G.edges()) {
-            sb.append(this.name(e.either())).append(" (y) ").append(this.name(e.other(e.either()))).append(" -> ").append(e.weight()).append("\n");
+            sb.append(this.name(e.either())).append(" (y) ").append(this.name(e.other(e.either()))).append("\n");
         }
         return sb.toString();
     }
