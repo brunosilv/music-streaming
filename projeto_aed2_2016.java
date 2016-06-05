@@ -16,7 +16,7 @@ import java.util.Scanner;
  *
  * @author Bruno Silva
  */
-public class projeto_aed2_2016 {
+public abstract class projeto_aed2_2016 {
 
     /**
      * @param args the command line arguments
@@ -26,6 +26,8 @@ public class projeto_aed2_2016 {
         /*
          * St's Principais 
          */
+        
+        
         // red-black trees
         RedBlackBST_Projecto<String, Genero> generosST = new RedBlackBST_Projecto<>();
         RedBlackBST_Projecto<String, Musica> musicasST = new RedBlackBST_Projecto<>();
@@ -34,22 +36,44 @@ public class projeto_aed2_2016 {
         //hashing trees
         SeparateChainingHashST1<String, Artista> artistasST = new SeparateChainingHashST1<>();
         SeparateChainingHashST1<String, Utilizador> utilizadoresST = new SeparateChainingHashST1<>();
+        
+        //symbol-graphs
+        
+        SymbolEdgeWeigthedGraph sgFollow = new SymbolEdgeWeigthedGraph(".//data//FollowUsers.txt", ";");
+        System.out.println(sgFollow.toString());
+        
+        FriendShipsGraph sgFriends = new FriendShipsGraph(".//data//FriendshipsGraph.txt",";");
+        System.out.println(sgFriends.toString());
+        //sgFriends.SPBetweenUsers("arpinto", "jtorres");
+        
+        LikesGraph sgLikesMusic = new LikesGraph(".//data//LikesMusics.txt",";");
+        System.out.println(sgLikesMusic.toString());
+        
+        LikesGraph sgLikesPlayList = new LikesGraph(".//data//LikesPlaylists.txt",";");
+        System.out.println(sgLikesPlayList.toString());
+        
+        LikesGraph sgLikesArtist = new LikesGraph(".//data//LikesArtists.txt",";");
+        System.out.println(sgLikesArtist.toString());
+        
         /*
          *  Inicialização das St's
          */
-        loadFromFileGenerosST(generosST, ".//data//generos.txt");
-        loadFromFileArtistasST(artistasST, ".//data//artista.txt");
+        loadFromFileGenerosST(generosST, ".//data//geneross.txt");
+        loadFromFileArtistasST(artistasST, ".//data//artistas.txt");
         loadFromFileUtilizadoresST(utilizadoresST, ".//data//pessoas.txt");
-        loadFromFileMusicasST(musicasST, generosST, artistasST, playlistsST, utilizadoresST, ".//data//musicas.txt");
+        loadFromFileMusicasST(musicasST, generosST, artistasST, playlistsST, utilizadoresST, ".//data//musicass.txt");
         loadFromFilePlaylistST(playlistsST, musicasST, ".//data//playlists.txt");
         loadFromFileHistory(utilizadoresST, ".//data//historico.txt");
+        
+        
+ 
         /* 
          *  Chamada dos Clientes 
          */
         //printMusicByGenres(generosST); //a funcionar
         //printMusicByArtist(artistasST); //a funcionar
         //printMusicByPlaylist(playlistsST); //a funcionar
-        printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST); //a funcionar
+        //printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST); //a funcionar
         //createGenreSt(generosST); //a funcionar
         //saveGenreSt(generosST, ".//data//generos.txt"); // a funcionar
         //createArtistSt(artistasST, generosST); // a funcionar
@@ -61,9 +85,10 @@ public class projeto_aed2_2016 {
         //createUsersSt(utilizadoresST);
         //saveUserSt(utilizadoresST, ".//data//pessoas.txt"); // a funcionar
         //playMusic(musicasST, utilizadoresST, "jtorres"); // a funcionar
-        //savePlayedMusics(utilizadoresST, ".//data//historico.txt" , "jtorres"); // a funcionar
+        //savePlayedMusics(utilizadoresST, ".//data//historico.txt"); // a funcionar
         //musicPlaylistSearch(playlistsST, musicasST);// a funcionar
     }
+
 
     /*
      *   Loads
@@ -191,6 +216,7 @@ public class projeto_aed2_2016 {
 
             Utilizador u = new Utilizador(nome, username, email);
             utilizadoresST.put(username, u);
+
         }
     }
 
@@ -766,12 +792,15 @@ public class projeto_aed2_2016 {
      * @param path
      * @param user
      */
-    public static void savePlayedMusics(SeparateChainingHashST1<String, Utilizador> utilizadoresST, String path, String user) {
+    public static void savePlayedMusics(SeparateChainingHashST1<String, Utilizador> utilizadoresST, String path) {
         Out o = new Out(path);
-        Utilizador u = utilizadoresST.get(user);
-        RedBlackBST_Projecto<String, String> h = u.getHistoricoST();
-        for (String key : h.keys()) {
-            o.println(user + ";" + key + ";" + h.get(key));
+        for (String u : utilizadoresST.keys()) {
+            Utilizador utilizador = utilizadoresST.get(u);
+            RedBlackBST_Projecto<String, String> h = utilizador.getHistoricoST();
+            for (String key : h.keys()) {
+                o.println(utilizador.getUsername() + ";" + key + ";" + h.get(key));
+
+            }
         }
 
     }
@@ -803,6 +832,22 @@ public class projeto_aed2_2016 {
         } else {
             System.out.println("Musica não se encontra na BD!");
         }
+
+    }
+
+    public static void likeMusic() {
+
+    }
+
+    public static void likeArtist() {
+
+    }
+
+    public static void likePlaylist() {
+
+    }
+
+    public static void followUser() {
 
     }
 }
