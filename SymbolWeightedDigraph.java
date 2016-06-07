@@ -1,4 +1,7 @@
-/******************************************************************************
+package edu.ufp.inf.aed2.project1;
+import edu.princeton.cs.algs4.*;
+
+/*************************************************************************
  *  Compilation:  javac SymbolDigraph.java
  *  Execution:    java SymbolDigraph
  *  Dependencies: ST.java Digraph.java In.java
@@ -13,11 +16,10 @@
  *     MCO
  *  LAX
  *
- ******************************************************************************/
-package edu.ufp.inf.aed2.project1;
-import edu.princeton.cs.algs4.*;
+ *************************************************************************/
+
 /**
- *  The <tt>SymbolDigraph</tt> class represents a digraph, where the
+ *  The <tt>SymbolWeightedDigraph</tt> class represents a digraph, where the
  *  vertex names are arbitrary strings.
  *  By providing mappings between string vertex names and integers,
  *  it serves as a wrapper around the
@@ -38,10 +40,11 @@ import edu.princeton.cs.algs4.*;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-public class SymbolEdgeWeigthedDigraph {
+public class SymbolWeightedDigraph {
     private ST<String, Integer> st;  // string -> index
     private String[] keys;           // index  -> string
-    private Digraph G;
+    private EdgeWeightedDigraph G;
+
     /**  
      * Initializes a digraph from a file using the specified delimiter.
      * Each line in the file contains
@@ -50,105 +53,151 @@ public class SymbolEdgeWeigthedDigraph {
      * @param filename the name of the file
      * @param delimiter the delimiter between fields
      */
-    public SymbolEdgeWeigthedDigraph(String filename, String delimiter) {
+    public SymbolWeightedDigraph(String filename, String delimiter) {
         st = new ST<String, Integer>();
+
         // First pass builds the index by reading strings to associate
         // distinct strings with an index
         In in = new In(filename);
         while (in.hasNextLine()) {
             String[] a = in.readLine().split(delimiter);
-            for (int i = 0; i < a.length; i++) {
+            for (int i = 0; i < a.length-1; i++) {
                 if (!st.contains(a[i]))
                     st.put(a[i], st.size());
             }
         }
+
         // inverted index to get string keys in an aray
         keys = new String[st.size()];
         for (String name : st.keys()) {
             keys[st.get(name)] = name;
         }
+
         // second pass builds the digraph by connecting first vertex on each
         // line to all others
-        G = new Digraph(st.size());
+        G = new EdgeWeightedDigraph(st.size());
         in = new In(filename);
         while (in.hasNextLine()) {
             String[] a = in.readLine().split(delimiter);
             int v = st.get(a[0]);
-            for (int i = 1; i < a.length; i++) {
+            for (int i = 1; i < a.length-1; i++) {
                 int w = st.get(a[i]);
-                G.addEdge(v, w);
+                double weight = Double.parseDouble(a[i+1]);
+                G.addEdge(new DirectedEdge(v, w, weight));
             }
         }
     }
-    
-    /**
-     * Does the digraph contain the vertex named <tt>s</tt>?
-     * @param s the name of a vertex
-     * @return <tt>true</tt> if <tt>s</tt> is the name of a vertex, and <tt>false</tt> otherwise
-     */
+
+
     public boolean contains(String s) {
         return st.contains(s);
     }
-    /**
-     * Returns the integer associated with the vertex named <tt>s</tt>.
-     * @param s the name of a vertex
-     * @return the integer (between 0 and <em>V</em> - 1) associated with the vertex named <tt>s</tt>
-     */
+
+
     public int index(String s) {
         return st.get(s);
     }
-    /**
-     * Returns the name of the vertex associated with the integer <tt>v</tt>.
-     * @param v the integer corresponding to a vertex (between 0 and <em>V</em> - 1) 
-     * @return the name of the vertex associated with the integer <tt>v</tt>
-     */
+
+
     public String name(int v) {
         return keys[v];
     }
-    /**
-     * Returns the digraph assoicated with the symbol graph. It is the client's responsibility
-     * not to mutate the digraph.
-     * @return the digraph associated with the symbol digraph
-     */
-    public Digraph G() {
+
+    public EdgeWeightedDigraph G() {
         return G;
     }
+
+    public ST<String, Integer> getSt() {
+        return st;
+    }
+
+    public void setSt(ST<String, Integer> st) {
+        this.st = st;
+    }
+
+    public String[] getKeys() {
+        return keys;
+    }
+
+    public void setKeys(String[] keys) {
+        this.keys = keys;
+    }
+
+    public void putSymbol(String val) {
+        this.st.put(val, this.st.size());
+        
+        keys = new String[st.size()+1];
+        for (String name : st.keys()) {
+            keys[st.get(name)] = name;
+        }
+        
+        keys[this.st.size()] = val;
+    }
+    
     /**
-     * Unit tests the <tt>SymbolDigraph</tt> data type.
+     * Remove from Mapping in the SymbolGraph
+     * 
+     * @param val
      */
-    public static void main(String[] args) {
-        String filename  = args[0];
-        String delimiter = args[1];
-        SymbolEdgeWeigthedDigraph sg = new SymbolEdgeWeigthedDigraph(filename, delimiter);
-        Digraph G = sg.G();
-        while (!StdIn.isEmpty()) {
-            String t = StdIn.readLine();
-            for (int v : G.adj(sg.index(t))) {
-                StdOut.println("   " + sg.name(v));
-            }
+    public void removeSymbol(String val) {
+        if(this.st.contains(val)) {
+            this.st.delete(val);
+        }
+    }
+    
+    public void addEdge(String s1, String s2, double weight) throws Exception {
+        if(!contains(s1) || !contains(s2)) {
+            throw new Exception("SymbolWeightedDigraph(): One of the username is not in ST, add it first with putSymbol()");
+        }
+        
+        int i1,i2;
+        i1 = index(s1);
+        i2 = index(s2);
+    
+        // Fazer um copia do Grafo antigo e colocar no novo.
+        EdgeWeightedDigraph g_newpointer = new EdgeWeightedDigraph(st.size());
+        for (DirectedEdge g : G.edges()) {
+            DirectedEdge e = new DirectedEdge(g.from(),g.to(),g.weight());
+            g_newpointer.addEdge(e);
+        }
+        
+        // Adicionar o novo Edge
+        g_newpointer.addEdge(new DirectedEdge(i1,i2,weight));
+        G = g_newpointer;
+    }
+   
+
+    public void printSymbolDiagraph() {
+        for (int i = 0; i < st.size(); i++) {    
+            String username = keys[i];
+            int id = st.get(username);
+            System.out.println(id + " > " + username);
         }
     }
 }
-/******************************************************************************
- *  Copyright 2002-2015, Robert Sedgewick and Kevin Wayne.
+
+
+/*************************************************************************
+ *  Copyright 2002-2012, Robert Sedgewick and Kevin Wayne.
  *
- *  This file is part of algs4.jar, which accompanies the textbook
+ *  This file is part of algs4-package.jar, which accompanies the textbook
  *
  *      Algorithms, 4th edition by Robert Sedgewick and Kevin Wayne,
  *      Addison-Wesley Professional, 2011, ISBN 0-321-57351-X.
  *      http://algs4.cs.princeton.edu
  *
  *
- *  algs4.jar is free software: you can redistribute it and/or modify
+ *  algs4-package.jar is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
  *
- *  algs4.jar is distributed in the hope that it will be useful,
+ *  algs4-package.jar is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *
+
  *  You should have received a copy of the GNU General Public License
- *  along with algs4.jar.  If not, see http://www.gnu.org/licenses.
- ******************************************************************************/
+ *  along with algs4-package.jar.  If not, see http://www.gnu.org/licenses.
+ *************************************************************************/
+

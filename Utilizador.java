@@ -5,6 +5,8 @@
  */
 package edu.ufp.inf.aed2.project1;
 
+import java.util.ArrayList;
+
 
 /**
  *
@@ -17,7 +19,9 @@ public class Utilizador {
     String mail;
    
     private RedBlackBST_Projecto<String, String> historicoST = new RedBlackBST_Projecto<>();
-    
+    private ArrayList<String> likesMusics = new ArrayList<>();
+    private ArrayList<String> likesPlaylists = new ArrayList<>();
+    private ArrayList<String> likesArtists = new ArrayList<>();
     /**
      *
      * @param nome
@@ -69,6 +73,30 @@ public class Utilizador {
      */
     public String getUsername() {
         return username;
+    }
+
+    public ArrayList<String> getLikesMusics() {
+        return likesMusics;
+    }
+
+    public void setLikesMusics(ArrayList<String> likesMusics) {
+        this.likesMusics = likesMusics;
+    }
+
+    public ArrayList<String> getLikesPlaylists() {
+        return likesPlaylists;
+    }
+
+    public void setLikesPlaylists(ArrayList<String> likesPlaylists) {
+        this.likesPlaylists = likesPlaylists;
+    }
+
+    public ArrayList<String> getLikesArtists() {
+        return likesArtists;
+    }
+
+    public void setLikesArtists(ArrayList<String> likesArtists) {
+        this.likesArtists = likesArtists;
     }
 
     /**

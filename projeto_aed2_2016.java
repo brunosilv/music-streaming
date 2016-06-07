@@ -5,9 +5,13 @@
  */
 package edu.ufp.inf.aed2.project1;
 
+import edu.princeton.cs.algs4.DirectedEdge;
+import edu.princeton.cs.algs4.Edge;
+import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Out;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.SymbolGraph;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -26,8 +30,6 @@ public abstract class projeto_aed2_2016 {
         /*
          * St's Principais 
          */
-        
-        
         // red-black trees
         RedBlackBST_Projecto<String, Genero> generosST = new RedBlackBST_Projecto<>();
         RedBlackBST_Projecto<String, Musica> musicasST = new RedBlackBST_Projecto<>();
@@ -36,25 +38,25 @@ public abstract class projeto_aed2_2016 {
         //hashing trees
         SeparateChainingHashST1<String, Artista> artistasST = new SeparateChainingHashST1<>();
         SeparateChainingHashST1<String, Utilizador> utilizadoresST = new SeparateChainingHashST1<>();
+
+        //Symbol Weighted Graphs
+        SymbolWeightedDigraph FollowUsers = new SymbolWeightedDigraph(".//data//FollowUsers.txt", ";");
+        SymbolWeightedGraph FriendshipsGraph = new SymbolWeightedGraph(".//data//FriendshipsGraph.txt", ";");
+
+        // Grafo Bipartido de Likes
         
-        //symbol-graphs
-        
-        SymbolEdgeWeigthedGraph sgFollow = new SymbolEdgeWeigthedGraph(".//data//FollowUsers.txt", ";");
-        System.out.println(sgFollow.toString());
-        
-        FriendShipsGraph sgFriends = new FriendShipsGraph(".//data//FriendshipsGraph.txt",";");
-        System.out.println(sgFriends.toString());
-        //sgFriends.SPBetweenUsers("arpinto", "jtorres");
-        
-        LikesGraph sgLikesMusic = new LikesGraph(".//data//LikesMusics.txt",";");
-        System.out.println(sgLikesMusic.toString());
-        
-        LikesGraph sgLikesPlayList = new LikesGraph(".//data//LikesPlaylists.txt",";");
-        System.out.println(sgLikesPlayList.toString());
-        
-        LikesGraph sgLikesArtist = new LikesGraph(".//data//LikesArtists.txt",";");
-        System.out.println(sgLikesArtist.toString());
-        
+        int size = utilizadoresST.size() + musicasST.size();
+        //System.out.println("Size: " + size);
+        SymbolGraph_Projecto LikesUsers = new SymbolGraph_Projecto(size);
+
+        size = utilizadoresST.size() + playlistsST.size();
+        //System.out.println("Size: " + size);
+        SymbolGraph_Projecto LikesPlaylists = new SymbolGraph_Projecto(size);
+
+        size = utilizadoresST.size() + artistasST.size();
+        //System.out.println("Size: " + size);
+        SymbolGraph_Projecto LikesArtists = new SymbolGraph_Projecto(size);
+
         /*
          *  Inicialização das St's
          */
@@ -64,9 +66,12 @@ public abstract class projeto_aed2_2016 {
         loadFromFileMusicasST(musicasST, generosST, artistasST, playlistsST, utilizadoresST, ".//data//musicass.txt");
         loadFromFilePlaylistST(playlistsST, musicasST, ".//data//playlists.txt");
         loadFromFileHistory(utilizadoresST, ".//data//historico.txt");
-        
-        
- 
+
+        //Loads da 2ªparte
+        loadFromFileUsersLikesMusics(utilizadoresST, ".//data//LikesMusics.txt");
+        loadFromFileUsersLikesPlaylists(utilizadoresST, ".//data//LikesPlaylists.txt");
+        loadFromFileUsersLikesArtists(utilizadoresST, ".//data//LikesArtists.txt");
+
         /* 
          *  Chamada dos Clientes 
          */
@@ -74,21 +79,39 @@ public abstract class projeto_aed2_2016 {
         //printMusicByArtist(artistasST); //a funcionar
         //printMusicByPlaylist(playlistsST); //a funcionar
         //printAll(musicasST, generosST, artistasST, playlistsST, utilizadoresST); //a funcionar
-        //createGenreSt(generosST); //a funcionar
-        //saveGenreSt(generosST, ".//data//generos.txt"); // a funcionar
-        //createArtistSt(artistasST, generosST); // a funcionar
-        //saveArtistSt(artistasST, ".//data//artista.txt"); // a funcionar
+        //createGenreSt(generosST); //a funcionar      
+        //createArtistSt(artistasST, generosST); // a funcionar      
         //createMusicSt(musicasST, generosST, artistasST); // a funcionar
         //updateMusicSt(musicasST, artistasST, generosST); // a funcionar
-        //deleteMusicSt(musicasST, artistasST, generosST); // a funcionar
-        //saveMusicSt(musicasST, ".//data//musicas.txt"); // a funcionar
-        //createUsersSt(utilizadoresST);
-        //saveUserSt(utilizadoresST, ".//data//pessoas.txt"); // a funcionar
-        //playMusic(musicasST, utilizadoresST, "jtorres"); // a funcionar
-        //savePlayedMusics(utilizadoresST, ".//data//historico.txt"); // a funcionar
+        //deleteMusicSt(musicasST, artistasST, generosST); // a funcionar        
+        //createUsersSt(utilizadoresST);       
+        //playMusic(musicasST, utilizadoresST, "jtorres"); // a funcionar      
         //musicPlaylistSearch(playlistsST, musicasST);// a funcionar
-    }
+//        printUserLikesArtists(utilizadoresST,"jtorres");
+//        printUserLikesPlaylists(utilizadoresST,"jtorres");
+//        printUserLikesMusics(utilizadoresST, "jtorres");
+//        System.out.println("\n");
+//        printFriendshipsGraph(FriendshipsGraph, true);
+//        System.out.println("\n");
+//        printFollowUsers(FollowUsers, true);
+//        System.out.println("\n");
+//        shortestFriendshipPath(FriendshipsGraph, "rmoreira", "jtorres");
+//        System.out.println("\n");
+         //UserArtistLike(utilizadoresST, artistasST, "jtorres");
+//        System.out.println("\n");
 
+        //Saves
+        saveGenreSt(generosST, ".//data//generos.txt"); // a funcionar
+        saveArtistSt(artistasST, ".//data//artista.txt"); // a funcionar
+        saveMusicSt(musicasST, ".//data//musicas.txt"); // a funcionar
+        saveUserSt(utilizadoresST, ".//data//pessoas.txt"); // a funcionar
+        savePlayedMusics(utilizadoresST, ".//data//historico.txt"); // a funcionar 
+        saveFriendships(FriendshipsGraph, ".//data//FriendshipsGraph.txt");// a funcionar
+        saveUsersFollowing(FollowUsers, ".//data//FollowUsers.txt"); // a funcionar 
+        saveLikesMusics(utilizadoresST, ".//data//LikesMusics.txt"); // a funcionar
+        saveLikesPlaylists(utilizadoresST, ".//data//LikesPlaylists.txt"); // a funcionar
+        saveLikesArtists(utilizadoresST, ".//data//LikesArtists.txt"); // a funcionar
+    }
 
     /*
      *   Loads
@@ -835,19 +858,291 @@ public abstract class projeto_aed2_2016 {
 
     }
 
-    public static void likeMusic() {
+    /*
+     *  2ª parte do Projeto
+     */
+    
+    /**
+     * load do arraylist de likes de artistas
+     * @param utilizadorST
+     * @param path 
+     */
+    public static void loadFromFileUsersLikesMusics(SeparateChainingHashST1<String, Utilizador> utilizadorST, String path) {
+        In in = new In(path);
 
+        while (!in.isEmpty()) {
+            String line = in.readLine();
+            String[] split = line.split(";");
+            Utilizador s = (Utilizador) utilizadorST.get(split[0]);
+            // array de likesMusica
+            for (int i = 1; i < split.length; i++) {
+                s.getLikesMusics().add(split[i]);
+            }
+        }
+    }
+/**
+ * load do arraylist de likes de playlist
+ * @param utilizadorST
+ * @param path 
+ */
+    public static void loadFromFileUsersLikesPlaylists(SeparateChainingHashST1<String, Utilizador> utilizadorST, String path) {
+        In in = new In(path);
+
+        while (!in.isEmpty()) {
+            String line = in.readLine();
+            String[] split = line.split(";");
+            Utilizador s = (Utilizador) utilizadorST.get(split[0]);
+            // array de Likeslaylists
+            for (int i = 1; i < split.length; i++) {
+                s.getLikesPlaylists().add(split[i]);
+            }
+        }
+    }
+/**
+ * load do arraylist de likes de artistas
+ * @param utilizadorST
+ * @param path 
+ */
+    public static void loadFromFileUsersLikesArtists(SeparateChainingHashST1<String, Utilizador> utilizadorST, String path) {
+        In in = new In(path);
+
+        while (!in.isEmpty()) {
+            String line = in.readLine();
+            String[] split = line.split(";");
+            Utilizador s = (Utilizador) utilizadorST.get(split[0]);
+            //array de likeartistas
+            for (int i = 1; i < split.length; i++) {
+                s.getLikesArtists().add(split[i]);
+            }
+        }
+    }
+/**
+ * printUserlikes Artists
+ * @param utilizadorST
+ * @param username 
+ */
+    public static void printUserLikesArtists(SeparateChainingHashST1<String, Utilizador> utilizadorST, String username) {
+        Utilizador s = utilizadorST.get(username);
+        System.out.println("Artistas de que o " + username + " gosta:\n");
+        for (String name : s.getLikesArtists()) {
+            System.out.println(name);
+        }
+    }
+/**
+ * imprime UserlikePlaylists
+ * @param utilizadorST
+ * @param username 
+ */
+    public static void printUserLikesPlaylists(SeparateChainingHashST1<String, Utilizador> utilizadorST, String username) {
+        Utilizador s = utilizadorST.get(username);
+        System.out.println("\nPlaylist's de que o " + username + " gosta:\n");
+        for (String name : s.getLikesPlaylists()) {
+            System.out.println(name);
+        }
+    }
+/**
+ * imprime userLikesMusics
+ * @param utilizadorST
+ * @param username 
+ */
+    public static void printUserLikesMusics(SeparateChainingHashST1<String, Utilizador> utilizadorST, String username) {
+        Utilizador s = utilizadorST.get(username);
+        System.out.println("\nMusicas de que o " + username + " gosta:\n");
+        for (String music : s.getLikesMusics()) {
+            System.out.println(music);
+        }
+    }
+/**
+ * imprime os amigos no ecrã
+ * @param g
+ * @param type 
+ */
+    public static void printFriendshipsGraph(SymbolWeightedGraph g, boolean type) {
+
+        String[] keys = g.getKeys();
+        String NEWLINE = System.getProperty("line.separator");
+        StringBuilder s = new StringBuilder();
+        for (int v = 0; v < g.G().V(); v++) {
+            for (Edge e : g.G().adj(v)) {
+                s.append(keys[e.either()]).append(" -> ").append(keys[e.other(e.either())]).append(" ").append(String.format("%5.2f ", e.weight()));
+            }
+            s.append(NEWLINE);
+        }
+        System.out.println(s);
+
+        if (type) {
+            g.printSymbolGraph();
+        }
+    }
+/**
+ * imprimir o SymbolWDigraph de seguidores
+ * @param g
+ * @param type 
+ */
+    public static void printFollowUsers(SymbolWeightedDigraph g, boolean type) {
+
+        String[] keys = g.getKeys();
+        String NEWLINE = System.getProperty("line.separator");
+        StringBuilder s = new StringBuilder();
+        for (int v = 0; v < g.G().V(); v++) {
+            for (DirectedEdge e : g.G().adj(v)) {
+                s.append(keys[e.from()]).append(" -> ").append(keys[e.to()]).append(" ").append(String.format("%5.2f ", e.weight()));
+            }
+            s.append(NEWLINE);
+        }
+        System.out.println(s);
+    }
+/**
+ * Save ficheiro de friendship
+ * @param g
+ * @param path 
+ */
+    public static void saveFriendships(SymbolWeightedGraph g, String path) {
+        Out o = new Out(path);
+        String[] keys = g.getKeys();
+        for (Edge e : g.G().edges()) {
+            o.println(keys[e.either()] + ";" + keys[e.other(e.either())] + ";" + e.weight());
+        }
     }
 
-    public static void likeArtist() {
+    public static void saveUsersFollowing(SymbolWeightedDigraph g, String path) {
+        Out o = new Out(path);
+        String[] keys = g.getKeys();
+        for (DirectedEdge e : g.G().edges()) {
+            o.println(keys[e.from()] + ";" + keys[e.to()] + ";" + e.weight());
+        }
+    }
+/**
+ * Save do ficheiro LikesMusic
+ * @param utilizadorST
+ * @param path 
+ */
+    public static void saveLikesMusics(SeparateChainingHashST1<String, Utilizador> utilizadorST, String path) {
+        Out o = new Out(path);
 
+        for (String username : utilizadorST.keys()) {
+            Utilizador s = utilizadorST.get(username);
+            if (s.getLikesMusics().isEmpty()) {
+                continue;
+            }
+            int aux = 1;
+            StringBuilder sb = new StringBuilder();
+            sb.append(s.getUsername()).append(";");
+            for (String music : s.getLikesMusics()) {
+                if (aux == s.getLikesMusics().size()) {
+                    sb.append(music);
+                } else {
+                    sb.append(music).append(";");
+                }
+                aux++;
+            }
+            o.println(sb.toString());
+        }
+    }
+/**
+ * Save do likesPlaylists
+ * @param utilizadorST
+ * @param path 
+ */
+    public static void saveLikesPlaylists(SeparateChainingHashST1<String, Utilizador> utilizadorST, String path) {
+        Out o = new Out(path);
+
+        for (String username : utilizadorST.keys()) {
+            Utilizador s = utilizadorST.get(username);
+            if (s.getLikesPlaylists().isEmpty()) {
+                continue;
+            }
+            int aux = 1;
+            StringBuilder sb = new StringBuilder();
+            sb.append(s.getUsername()).append(";");
+            for (String name : s.getLikesPlaylists()) {
+                if (aux == s.getLikesPlaylists().size()) {
+                    sb.append(name);
+                } else {
+                    sb.append(name).append(";");
+                }
+                aux++;
+            }
+            o.println(sb.toString());
+        }
+    }
+/**
+ * Save dos likes de artistas
+ * @param utilizadorST
+ * @param path 
+ */
+    public static void saveLikesArtists(SeparateChainingHashST1<String, Utilizador> utilizadorST, String path) {
+        Out o = new Out(path);
+
+        for (String username : utilizadorST.keys()) {
+            Utilizador s = utilizadorST.get(username);
+            if (s.getLikesArtists().isEmpty()) {
+                continue;
+            }
+            int aux = 1;
+            StringBuilder sb = new StringBuilder();
+            sb.append(s.getUsername()).append(";");
+            for (String name : s.getLikesArtists()) {
+                if (aux == s.getLikesArtists().size()) {
+                    sb.append(name);
+                } else {
+                    sb.append(name).append(";");
+                }
+                aux++;
+            }
+            o.println(sb.toString());
+        }
+    }
+/**
+ * ShortestPath entre dois users
+ * @param g
+ * @param username1
+ * @param username2 
+ */
+    public static void shortestFriendshipPath(SymbolWeightedGraph g, String username1, String username2) {
+
+        int user[] = new int[2];
+        try {
+            user[0] = g.index(username1);
+            user[1] = g.index(username2);
+        } catch (NullPointerException e) {
+            System.out.println("Utilizador não existe na BD!");
+            return;
+        }
+
+        DijkstraUndirectedSP sp = new DijkstraUndirectedSP(g.G(), user[0]);
+        String[] keys = g.getKeys();
+
+        if (sp.hasPathTo(user[1])) {
+            System.out.println("Caminho mais curto de " + username1 + " para " + username2 + " (" + String.format("0.1f", sp.distTo(user[1])) +")");
+            if (sp.hasPathTo(user[1])) {
+                for (Edge e : sp.pathTo(user[1])) {
+                    System.out.print(keys[e.either()] + " -> " + keys[e.other(e.either())] + " " + String.format("%5.2f ", e.weight()) + " ");
+                }
+            }
+            StdOut.println();
+        } else {
+            System.out.println("Caminho Impossivel!");
+        }
+    }
+/**
+ * Dar like numa musica
+ * @param utilizadorST
+ * @param artistaST
+ * @param username 
+ */
+    public static void UserArtistLike(SeparateChainingHashST1<String, Utilizador> utilizadorST, SeparateChainingHashST1<String, Artista> artistaST, String username) {
+        String artista;
+        System.out.println("Artista a dar like: ");
+        Scanner sca = new Scanner(System.in);
+        Utilizador user = utilizadorST.get(username);
+        artista = sca.nextLine();
+        for (String s : user.getLikesArtists()) {
+            if (artista.compareTo(s) == 0) {
+                return;
+            }
+        }
+        user.getLikesArtists().add(artista);
     }
 
-    public static void likePlaylist() {
-
-    }
-
-    public static void followUser() {
-
-    }
 }
